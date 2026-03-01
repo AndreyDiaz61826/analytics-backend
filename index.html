@@ -29,6 +29,7 @@ footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
 
 <header>Новый Аналитический Центр 💎DARKS🍀</header>
 
+<!-- Выбор проекта -->
 <div class="container" id="main-screen">
   <div class="project-card flex" onclick="openProject('arizona')">
     <img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="project-icon" alt="Arizona Online">
@@ -44,24 +45,22 @@ footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
   </div>
 </div>
 
+<!-- Экран сервера -->
 <div class="container hidden" id="server-screen">
   <button class="back-btn" onclick="goBackToProjects()">← Назад к проектам</button>
   <div class="section-title" id="server-project-name"></div>
   <div class="menu" id="server-menu"></div>
   
-  <!-- Блок информации о сервере -->
-  <div id="server-info" class="server-card">
-    <p><span class="label">Онлайн сервера:</span> Временно недоступен</p>
-    <p><span class="label">Главный Администратор:</span> -</p>
-    <p><span class="label">Штат Главного Администратора:</span> -</p>
-    <p><span class="label">Дата открытия сервера:</span> -</p>
-  </div>
+  <div id="server-info" class="server-card"></div>
   
-  <!-- Меню организаций -->
-  <div class="section-title">Выберите организацию:</div>
-  <div class="menu" id="org-menu"></div>
+  <button class="back-btn" id="org-btn" onclick="toggleOrgMenu()" style="margin-top:10px;">Выбрать организацию</button>
   
-  <!-- Карточка выбранной организации -->
+  <div class="menu hidden" id="org-menu"></div>
+</div>
+
+<!-- Экран организации -->
+<div class="container hidden" id="org-screen">
+  <button class="back-btn" onclick="goBackToServer()">← Назад к серверу</button>
   <div id="org-info"></div>
 </div>
 
@@ -83,19 +82,23 @@ const projects = {
   amazing:["RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"]
 };
 
-// Списки организаций
+// Информация о серверах (пока шаблон)
+const serverDetails = {
+  "Phoenix": {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"},
+  "Tucson": {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"},
+  "Scottdale": {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"},
+  // Можно добавить остальные
+};
+
+// Организации
 const organizations = {
-  "Arizona Online":[
-    {name:"Правительство", description:"Органы управления штатом", leader:"Губернатор", deputies:"Замы", members:"-", extra:"Законы и контроль"},
-    {name:"Полиция Лос-Сантос", description:"Обеспечение правопорядка", leader:"Начальник", deputies:"Замы", members:"-", extra:"Патрули, аресты"},
-    {name:"FBI", description:"Федеральное расследование", leader:"Директор", deputies:"Замы", members:"-", extra:"Спецоперации"}
+  "Phoenix":[
+    {name:"Правительство", private:false, leader:"Губернатор", deputies:"Замы", members:"-", purch:"Есть"},
+    {name:"FBI", private:false, leader:"Директор", deputies:"Замы", members:"-", purch:"Нет"},
+    {name:"LSPD", private:false, leader:"Начальник", deputies:"Замы", members:"-", purch:"Нет"}
   ],
-  "Rodina Online":[
-    {name:"Центральная полиция", description:"Поддержка порядка", leader:"Начальник", deputies:"Замы", members:"-", extra:"Патрули"},
-    {name:"Больница Джефферсон", description:"Медицинская помощь", leader:"Главврач", deputies:"Замы", members:"-", extra:"Лечение игроков"}
-  ],
-  "Amazing Online":[
-    {name:"RED Team", description:"Главная фракция", leader:"Лидер RED", deputies:"Замы", members:"-", extra:"События, задания"}
+  "Tucson":[
+    {name:"Правительство", private:false, leader:"Губернатор", deputies:"Замы", members:"-", purch:"Есть"}
   ]
 };
 
@@ -106,7 +109,6 @@ function openProject(projectId){
   const projectName = projectId.charAt(0).toUpperCase() + projectId.slice(1) + " Online";
   document.getElementById("server-project-name").textContent = projectName;
 
-  // Список серверов
   const menu = document.getElementById("server-menu");
   menu.innerHTML = "";
   projects[projectId].forEach(server=>{
@@ -116,59 +118,69 @@ function openProject(projectId){
     btn.onclick = () => loadServer(projectName, server);
     menu.appendChild(btn);
   });
+  document.getElementById("org-menu").classList.add("hidden");
 }
 
 // Возврат к проектам
 function goBackToProjects(){
   document.getElementById("server-screen").classList.add("hidden");
   document.getElementById("main-screen").classList.remove("hidden");
-  document.getElementById("org-info").innerHTML = "";
-  document.getElementById("org-menu").innerHTML = "";
 }
 
 // Загрузка информации о сервере
 function loadServer(projectName, server){
+  const info = serverDetails[server] || {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"};
   document.getElementById("server-info").innerHTML = `
     <div class="server-card">
-      <div class="card-title">${server}</div>
-      <div class="card-info">
-        <p><span class="label">Онлайн сервера:</span> Временно недоступен</p>
-        <p><span class="label">Главный Администратор:</span> -</p>
-        <p><span class="label">Штат Главного Администратора:</span> -</p>
-        <p><span class="label">Дата открытия сервера:</span> -</p>
-      </div>
+      <p><span class="label">Название проекта:</span> ${projectName}</p>
+      <p><span class="label">Название сервера:</span> ${server}</p>
+      <p><span class="label">Главный Администратор:</span> ${info.admin}</p>
+      <p><span class="label">Заместитель Главного Администратора:</span> ${info.deputy}</p>
+      <p><span class="label">Общий онлайн:</span> ${info.online}</p>
+      <p><span class="label">Описание сервера:</span> ${info.desc}</p>
     </div>
   `;
-
-  // Меню организаций для выбранного сервера
+  
+  // Кнопка организации
   const orgMenu = document.getElementById("org-menu");
   orgMenu.innerHTML = "";
-  (organizations[projectName] || []).forEach(org=>{
+  (organizations[server] || []).forEach(org=>{
     const btn = document.createElement("div");
     btn.textContent = org.name;
     btn.className = "menu-item";
-    btn.onclick = () => showOrgInfo(org);
+    btn.onclick = () => openOrgScreen(org);
     orgMenu.appendChild(btn);
   });
-
-  // Сброс карточки организации
-  document.getElementById("org-info").innerHTML = "";
+  document.getElementById("org-menu").classList.add("hidden");
 }
 
-// Показ информации об организации
-function showOrgInfo(org){
+// Показать/скрыть меню организаций
+function toggleOrgMenu(){
+  document.getElementById("org-menu").classList.toggle("hidden");
+}
+
+// Открыть экран организации
+function openOrgScreen(org){
+  document.getElementById("server-screen").classList.add("hidden");
+  document.getElementById("org-screen").classList.remove("hidden");
   document.getElementById("org-info").innerHTML = `
     <div class="org-card">
       <div class="card-title">${org.name}</div>
       <div class="card-info">
-        <p><span class="label">Описание:</span> ${org.description}</p>
+        <p><span class="label">Частная или нет:</span> ${org.private ? "Да" : "Нет"}</p>
         <p><span class="label">Лидер:</span> ${org.leader}</p>
         <p><span class="label">Заместители:</span> ${org.deputies}</p>
-        <p><span class="label">Участники:</span> ${org.members}</p>
-        <p><span class="label">Дополнительно:</span> ${org.extra}</p>
+        <p><span class="label">Кол-во участников:</span> ${org.members}</p>
+        <p><span class="label">Покупные ранги:</span> ${org.purch}</p>
       </div>
     </div>
   `;
+}
+
+// Возврат к серверу из организации
+function goBackToServer(){
+  document.getElementById("org-screen").classList.add("hidden");
+  document.getElementById("server-screen").classList.remove("hidden");
 }
 </script>
 
