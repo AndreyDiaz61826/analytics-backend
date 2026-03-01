@@ -1,28 +1,24 @@
 const express = require("express");
-const fetch = require("node-fetch");
-const cors = require("cors");
-
+const axios = require("axios");
 const app = express();
-app.use(cors());
+
+const PORT = process.env.PORT || 3000;
 
 app.get("/server/:id", async (req, res) => {
-  const id = req.params.id;
+  const serverId = req.params.id;
 
   try {
-    const response = await fetch(`https://api.gamemonitoring.ru/servers/${id}`);
-    const data = await response.json();
+    const response = await axios.get(
+      `https://api.arizona-rp.com/server/${serverId}`
+    );
 
-    res.json({
-      online: data.numplayers || 0,
-      max: data.maxplayers || 0,
-      status: data.online ? "online" : "offline"
-    });
-  } catch (err) {
+    res.json(response.data);
+  } catch (error) {
+    console.error(error.message);
     res.status(500).json({ error: "Ошибка получения данных" });
   }
 });
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+  console.log(`Server started on port ${PORT}`);
 });
