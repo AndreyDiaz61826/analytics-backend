@@ -1,164 +1,139 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Новый Аналитический Центр 💎DARKS🍀</title>
-<style>
-body {
-  margin:0; padding:0;
-  font-family: Arial, sans-serif;
-  background-color: #121212;
-  color: #e0e0e0;
-}
-header {
-  text-align:center;
-  padding:15px 0;
-  font-size: 28px;
-  font-weight:bold;
-  background-color:#1f1f1f;
-}
-.tabs {
-  display:flex;
-  justify-content:center;
-  margin-top:15px;
-}
-.tab {
-  padding:10px 20px;
-  margin:0 5px;
-  cursor:pointer;
-  background:#2b2b2b;
-  border-radius:5px;
-}
-.tab.active {
-  background:#4a90e2;
-  color:#fff;
-}
-.content {
-  max-width: 800px;
-  margin:20px auto;
-  padding:20px;
-  background:#1f1f1f;
-  border-radius:8px;
-}
-.server {
-  padding:10px;
-  margin-bottom:10px;
-  background:#2b2b2b;
-  border-radius:5px;
-}
-.status-online {color:#4caf50;font-weight:bold;}
-.status-offline {color:#f44336;font-weight:bold;}
-#discord-banner {
-  text-align:center;
-  margin-top:20px;
-  padding:15px;
-  background:#2b2b2b;
-  border-radius:8px;
-}
-#discord-banner a {
-  text-decoration:none;
-  color:#4a90e2;
-  font-weight:bold;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Аналитический Центр 💎DARKS🍀</title>
+  <style>
+    body {
+      background: #0f0f14;
+      font-family: Arial, sans-serif;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .server-card {
+      background: #17171f;
+      padding: 20px;
+      border-radius: 16px;
+      margin: 20px auto;
+      max-width: 500px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+      transition: 0.3s;
+    }
+
+    .server-card:hover {
+      transform: scale(1.03);
+    }
+
+    .server-icon {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .server-card h3 {
+      margin: 0 0 5px 0;
+    }
+
+    .server-card p {
+      margin: 2px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #111;
+      font-size: 16px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    footer a {
+      color: #ff6bf0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 
-<header>Новый Аналитический Центр 💎DARKS🍀</header>
+  <header>Новый Аналитический Центр 💎DARKS🍀</header>
 
-<div class="tabs">
-  <div class="tab active" data-project="arizona">Arizona RP</div>
-  <div class="tab" data-project="rodina">Rodina RP</div>
-</div>
+  <!-- Arizona -->
+  <div class="server-card">
+    <img src="arizona.png" class="server-icon" alt="Arizona">
+    <div>
+      <h3>Arizona Mobile 3</h3>
+      <p>Онлайн: <span id="arizona-online">-</span></p>
+      <p>Статус: <span id="arizona-status">OFFLINE</span></p>
+    </div>
+  </div>
 
-<div class="content" id="project-content">
-  <p>Выберите сервер, чтобы увидеть онлайн...</p>
-</div>
+  <!-- Rodina -->
+  <div class="server-card">
+    <img src="rodina.png" class="server-icon" alt="Rodina">
+    <div>
+      <h3>Rodina RP</h3>
+      <p>Онлайн: <span id="rodina-online">-</span></p>
+      <p>Статус: <span id="rodina-status">OFFLINE</span></p>
+    </div>
+  </div>
 
-<div id="discord-banner">
-  Присоединяйся к нашему Discord серверу: <a href="https://discord.gg/yhzmfQVNx" target="_blank">✨Dark Straiwels✨</a>
-</div>
+  <!-- Amazing Online -->
+  <div class="server-card">
+    <img src="amazing.png" class="server-icon" alt="Amazing Online">
+    <div>
+      <h3>Amazing Online</h3>
+      <p>Онлайн: <span id="amazing-online">-</span></p>
+      <p>Статус: <span id="amazing-status">OFFLINE</span></p>
+    </div>
+  </div>
 
-<script>
-// 🔹 Тестовые данные для фронтенда (пока backend не готов)
-const BASE_URL = 'https://analytics-backend-production.up.railway.app'; // сюда вставим переменную на будущем этапе
+  <footer>
+    Подключайся к нашему Discord серверу: <a href="https://discord.gg/yhzmfQVNx" target="_blank">✨Dark Straiwels✨</a>
+  </footer>
 
-const projects = {
-  arizona: [
-    { name: 'Arizona Main', id: '9767606' },
-    { name: 'Arizona 3-Mobile', id: '9767607' }
-  ],
-  rodina: [
-    { name: 'Rodina Main', id: '1234567' }
-  ]
-};
+  <script>
+    const BASE_URL = 'https://analytics-backend-production.up.railway.app';
 
-const tabs = document.querySelectorAll('.tab');
-const contentDiv = document.getElementById('project-content');
+    function fetchServerData(serverId, onlineElId, statusElId) {
+      fetch(`${BASE_URL}/server/${serverId}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById(onlineElId).textContent = data.online;
+          document.getElementById(statusElId).textContent = data.status.toUpperCase();
+        })
+        .catch(() => {
+          document.getElementById(statusElId).textContent = 'OFFLINE';
+        });
+    }
 
-tabs.forEach(tab=>{
-  tab.addEventListener('click',()=>{
-    tabs.forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    renderServers(tab.dataset.project);
-  });
-});
+    // Начальная загрузка данных
+    fetchServerData('9767606', 'arizona-online', 'arizona-status'); // Arizona
+    fetchServerData('9767607', 'rodina-online', 'rodina-status');   // Rodina
+    fetchServerData('1234567', 'amazing-online', 'amazing-status'); // Amazing Online
 
-function renderServers(project){
-  const servers = projects[project];
-  contentDiv.innerHTML = '';
-  servers.forEach(server=>{
-    const div = document.createElement('div');
-    div.className='server';
-    div.innerHTML=`
-      <h3>${server.name}</h3>
-      <p>Онлайн: <span id="online-${server.id}">Загрузка...</span></p>
-      <p>Статус: <span id="status-${server.id}">Загрузка...</span></p>
-    `;
-    contentDiv.appendChild(div);
-    fetchServerData(server.id);
-  });
-}
-
-function fetchServerData(serverId){
-  // 🔹 Пока backend не готов, используем тестовые данные
-  const data = { online: Math.floor(Math.random()*500), status:'online' };
-  const onlineEl=document.getElementById(`online-${serverId}`);
-  const statusEl=document.getElementById(`status-${serverId}`);
-  onlineEl.innerText=data.online;
-  statusEl.innerText=data.status.toUpperCase();
-  statusEl.className=data.status==='online'?'status-online':'status-offline';
-  
-  // 🔹 Когда backend будет готов, заменим на fetch:
-  /*
-  fetch(`${BASE_URL}/server/${serverId}`)
-    .then(res=>res.json())
-    .then(data=>{
-      const onlineEl=document.getElementById(`online-${serverId}`);
-      const statusEl=document.getElementById(`status-${serverId}`);
-      onlineEl.innerText=data.online;
-      statusEl.innerText=data.status.toUpperCase();
-      statusEl.className=data.status==='online'?'status-online':'status-offline';
-    })
-    .catch(err=>{
-      const onlineEl=document.getElementById(`online-${serverId}`);
-      const statusEl=document.getElementById(`status-${serverId}`);
-      onlineEl.innerText='-';
-      statusEl.innerText='OFFLINE';
-      statusEl.className='status-offline';
-    });
-  */
-}
-
-// 🔹 Автообновление каждые 30 секунд
-setInterval(()=>{
-  const activeTab=document.querySelector('.tab.active').dataset.project;
-  projects[activeTab].forEach(server=>fetchServerData(server.id));
-},30000);
-
-// 🔹 Инициализация первой вкладки
-renderServers('arizona');
-</script>
+    // Автообновление каждые 30 секунд
+    setInterval(() => {
+      fetchServerData('9767606', 'arizona-online', 'arizona-status');
+      fetchServerData('9767607', 'rodina-online', 'rodina-status');
+      fetchServerData('1234567', 'amazing-online', 'amazing-status');
+    }, 30000);
+  </script>
 
 </body>
 </html>
