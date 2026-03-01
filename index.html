@@ -1,102 +1,84 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Аналитический Центр 💎DARKS🍀</title>
-  <style>
-    body {
-      background: #0f0f14;
-      font-family: Arial, sans-serif;
-      color: white;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      text-align: center;
-      padding: 30px 20px;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .project-card {
-      background: #17171f;
-      padding: 20px;
-      border-radius: 16px;
-      margin: 20px auto;
-      max-width: 500px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .project-card:hover {
-      transform: scale(1.03);
-    }
-
-    .project-icon {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
-      border-radius: 14px;
-    }
-
-    .project-info {
-      display: none;
-      background: #22222a;
-      border-radius: 14px;
-      padding: 15px;
-      margin: 10px auto;
-      max-width: 500px;
-    }
-
-    .server-list {
-      margin-top: 10px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .server-list button {
-      padding: 6px 10px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      background: #ff6bf0;
-      color: white;
-      transition: 0.3s;
-    }
-
-    .server-list button:hover {
-      background: #e055d5;
-    }
-
-    .server-info {
-      margin-top: 10px;
-      padding: 10px;
-      background: #17171f;
-      border-radius: 10px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #111;
-      font-size: 16px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-
-    footer a {
-      color: #ff6bf0;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Аналитический Центр 💎DARKS🍀</title>
+<style>
+  body {
+    background: #0f0f14;
+    font-family: Arial, sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .project-card {
+    background: #17171f;
+    padding: 20px;
+    border-radius: 16px;
+    margin: 20px auto;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  .project-card:hover { transform: scale(1.03); }
+  .project-icon {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 14px;
+  }
+  .project-info {
+    display: none;
+    background: #22222a;
+    border-radius: 14px;
+    padding: 15px;
+    margin: 10px auto;
+    max-width: 500px;
+  }
+  .server-list {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .server-list button {
+    padding: 6px 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: #3399ff; /* синий цвет */
+    color: white;
+    transition: 0.3s;
+  }
+  .server-list button:hover { background: #1c75d0; }
+  .server-info {
+    margin-top: 10px;
+    padding: 10px;
+    background: #17171f;
+    border-radius: 10px;
+    white-space: pre-line;
+  }
+  footer {
+    text-align: center;
+    padding: 20px;
+    background: #111;
+    font-size: 16px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  footer a { color: #3399ff; text-decoration: none; font-weight: bold; }
+</style>
 </head>
 <body>
 
@@ -110,9 +92,7 @@
 <div id="arizona" class="project-info">
   <h4>Информация о Arizona Online</h4>
   <p>Общий онлайн проекта: -</p>
-  <div class="server-list" id="arizona-servers">
-    <!-- Кнопки серверов -->
-  </div>
+  <div class="server-list" id="arizona-servers"></div>
   <div class="server-info" id="arizona-server-info">Выберите сервер для просмотра информации</div>
 </div>
 
@@ -124,9 +104,7 @@
 <div id="rodina" class="project-info">
   <h4>Информация о Rodina Online</h4>
   <p>Общий онлайн проекта: -</p>
-  <div class="server-list" id="rodina-servers">
-    <!-- Кнопки серверов -->
-  </div>
+  <div class="server-list" id="rodina-servers"></div>
   <div class="server-info" id="rodina-server-info">Выберите сервер для просмотра информации</div>
 </div>
 
@@ -138,9 +116,7 @@
 <div id="amazing" class="project-info">
   <h4>Информация о Amazing Online</h4>
   <p>Общий онлайн проекта: -</p>
-  <div class="server-list" id="amazing-servers">
-    <!-- Кнопки серверов -->
-  </div>
+  <div class="server-list" id="amazing-servers"></div>
   <div class="server-info" id="amazing-server-info">Выберите сервер для просмотра информации</div>
 </div>
 
@@ -149,45 +125,47 @@
 </footer>
 
 <script>
-  const projects = {
-    arizona: [
-      "Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock",
-      "Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert",
-      "Show-Low","Casa-Grande","Page","Sun-City","Queen-Creek","Sedona","Holiday","Wednesday",
-      "Yava","Faraway","Bumble Bee","Christmas","Mirage","Love","Drake","Mobile 1","Mobile 2","Mobile 3"
-    ],
-    rodina: [
-      "Центральный округ","Южный округ","Северный округ","Восточный округ","Западный округ",
-      "Приморский округ","Федеральный округ","Москва","Санкт-Петербург"
-    ],
-    amazing: [
-      "RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"
-    ]
-  };
+const projects = {
+  arizona: [
+    "Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock",
+    "Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert",
+    "Show-Low","Casa-Grande","Page","Sun-City","Queen-Creek","Sedona","Holiday","Wednesday",
+    "Yava","Faraway","Bumble Bee","Christmas","Mirage","Love","Drake","Mobile 1","Mobile 2","Mobile 3"
+  ],
+  rodina: [
+    "Центральный округ","Южный округ","Северный округ","Восточный округ","Западный округ",
+    "Приморский округ","Федеральный округ","Москва","Санкт-Петербург"
+  ],
+  amazing: [
+    "RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"
+  ]
+};
 
-  function toggleProject(projectId) {
-    const el = document.getElementById(projectId);
-    el.style.display = el.style.display === 'block' ? 'none' : 'block';
-    if (el.style.display === 'block') {
-      renderServers(projectId);
-    }
-  }
+function toggleProject(projectId){
+  const el = document.getElementById(projectId);
+  el.style.display = el.style.display==='block'?'none':'block';
+  if(el.style.display==='block') renderServers(projectId);
+}
 
-  function renderServers(projectId) {
-    const container = document.getElementById(projectId + '-servers');
-    container.innerHTML = '';
-    projects[projectId].forEach(server => {
-      const btn = document.createElement('button');
-      btn.textContent = server;
-      btn.onclick = () => showServerInfo(projectId, server);
-      container.appendChild(btn);
-    });
-  }
+function renderServers(projectId){
+  const container = document.getElementById(projectId+'-servers');
+  container.innerHTML='';
+  projects[projectId].forEach(server=>{
+    const btn=document.createElement('button');
+    btn.textContent=server;
+    btn.onclick=()=>showServerInfo(projectId, server);
+    container.appendChild(btn);
+  });
+}
 
-  function showServerInfo(projectId, server) {
-    const infoEl = document.getElementById(projectId + '-server-info');
-    infoEl.textContent = `Сервер: ${server}\nОнлайн: -\nСтатус: OFFLINE`;
-  }
+function showServerInfo(projectId, server){
+  const infoEl=document.getElementById(projectId+'-server-info');
+  infoEl.textContent=
+`Название сервера: ${server}
+Онлайн сервера: Временно недоступен
+Главный Администратор: 
+Штат Главного Администратора: `;
+}
 </script>
 
 </body>
