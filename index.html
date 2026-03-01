@@ -139,8 +139,16 @@ function loadServer(projectName, server){
     <p><span class="label">Заместитель Главного Администратора:</span> ${info.deputy}</p>
     <p><span class="label">Общий онлайн:</span> ${info.online}</p>
     <p><span class="label">Описание сервера:</span> ${info.desc}</p>
-    <p><span class="label">Организации:</span> <button class="org-btn" onclick="toggleOrgMenu()">Выбрать</button></p>
+    <p><span class="label">Организации:</span></p>
   `;
+
+  // Создаём кнопку программно
+  const btn = document.createElement("button");
+  btn.textContent = "Выбрать";
+  btn.className = "org-btn";
+  btn.addEventListener("click", toggleOrgMenu);
+  serverInfoDiv.appendChild(btn);
+
   document.getElementById("org-menu").classList.add("hidden");
 }
 
