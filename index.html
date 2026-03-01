@@ -23,6 +23,7 @@ header {text-align:center; padding:30px 20px; font-size:28px; font-weight:bold;}
 .hidden {display:none;}
 footer {text-align:center; padding:6px 0; background:#111; font-size:12px; position:fixed; bottom:0; width:100%;}
 footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
+.org-btn {padding:6px 10px; margin-top:10px; background:#222; border-radius:8px; cursor:pointer; border:1px solid #333;}
 </style>
 </head>
 <body>
@@ -53,8 +54,10 @@ footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
   
   <div id="server-info" class="server-card"></div>
   
-  <button class="back-btn" id="org-btn" onclick="toggleOrgMenu()" style="margin-top:10px;">Выбрать организацию</button>
-  
+  <div style="margin-top:10px;">
+    <span class="label">Организации:</span>
+    <button class="org-btn" onclick="toggleOrgMenu()">Выбрать</button>
+  </div>
   <div class="menu hidden" id="org-menu"></div>
 </div>
 
@@ -82,25 +85,26 @@ const projects = {
   amazing:["RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"]
 };
 
-// Информация о серверах (пока шаблон)
+// Информация о серверах (шаблон)
 const serverDetails = {
   "Phoenix": {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"},
   "Tucson": {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"},
   "Scottdale": {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"},
-  // Можно добавить остальные
+  // остальные можно добавить
 };
 
-// Организации
-const organizations = {
-  "Phoenix":[
-    {name:"Правительство", private:false, leader:"Губернатор", deputies:"Замы", members:"-", purch:"Есть"},
-    {name:"FBI", private:false, leader:"Директор", deputies:"Замы", members:"-", purch:"Нет"},
-    {name:"LSPD", private:false, leader:"Начальник", deputies:"Замы", members:"-", purch:"Нет"}
-  ],
-  "Tucson":[
-    {name:"Правительство", private:false, leader:"Губернатор", deputies:"Замы", members:"-", purch:"Есть"}
-  ]
-};
+// Организации (полный список примера)
+const orgList = [
+  {name:"Правительство", private:false, leader:"Губернатор", deputies:"Замы", members:"-", purch:"Есть"},
+  {name:"ФБР", private:false, leader:"Директор", deputies:"Замы", members:"-", purch:"Нет"},
+  {name:"ЛСПД", private:false, leader:"Начальник", deputies:"Замы", members:"-", purch:"Нет"},
+  {name:"ЛВПД", private:false, leader:"Начальник", deputies:"Замы", members:"-", purch:"Нет"},
+  {name:"РКШД", private:false, leader:"Начальник", deputies:"Замы", members:"-", purch:"Нет"},
+  {name:"Больница Джефферсон", private:false, leader:"Главврач", deputies:"Замы", members:"-", purch:"Нет"},
+  {name:"Больница ЛС", private:false, leader:"Главврач", deputies:"Замы", members:"-", purch:"Нет"},
+  {name:"Больница ЛВ", private:false, leader:"Главврач", deputies:"Замы", members:"-", purch:"Нет"},
+  {name:"Больница СФ", private:false, leader:"Главврач", deputies:"Замы", members:"-", purch:"Нет"}
+];
 
 // Открытие проекта
 function openProject(projectId){
@@ -140,23 +144,24 @@ function loadServer(projectName, server){
       <p><span class="label">Описание сервера:</span> ${info.desc}</p>
     </div>
   `;
-  
-  // Кнопка организации
-  const orgMenu = document.getElementById("org-menu");
-  orgMenu.innerHTML = "";
-  (organizations[server] || []).forEach(org=>{
-    const btn = document.createElement("div");
-    btn.textContent = org.name;
-    btn.className = "menu-item";
-    btn.onclick = () => openOrgScreen(org);
-    orgMenu.appendChild(btn);
-  });
-  document.getElementById("org-menu").classList.add("hidden");
 }
 
 // Показать/скрыть меню организаций
 function toggleOrgMenu(){
-  document.getElementById("org-menu").classList.toggle("hidden");
+  const orgMenu = document.getElementById("org-menu");
+  if(orgMenu.classList.contains("hidden")){
+    orgMenu.innerHTML = "";
+    orgList.forEach(org=>{
+      const btn = document.createElement("div");
+      btn.textContent = org.name;
+      btn.className = "menu-item";
+      btn.onclick = () => openOrgScreen(org);
+      orgMenu.appendChild(btn);
+    });
+    orgMenu.classList.remove("hidden");
+  } else {
+    orgMenu.classList.add("hidden");
+  }
 }
 
 // Открыть экран организации
