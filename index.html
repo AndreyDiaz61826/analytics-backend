@@ -5,41 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Аналитический Центр 💎DARKS🍀</title>
 <style>
-body {
-  margin:0; padding:0; font-family: Arial, sans-serif; background:#0f0f14; color:white;
-}
-header {
-  text-align:center; padding:30px 20px; font-size:28px; font-weight:bold;
-}
-.project-card {
-  display:flex; align-items:center; gap:20px;
-  background:#17171f; padding:15px; border-radius:12px;
-  margin:20px auto; max-width:500px; cursor:pointer; transition:0.3s;
-}
-.project-card:hover { transform: scale(1.02); }
-.project-icon { width:60px; height:60px; border-radius:10px; object-fit:cover; }
-.project-info { display:none; background:#22222a; border-radius:12px; padding:15px; margin:10px auto; max-width:500px; }
-.server-tabs { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
-.server-tab {
-  padding:6px 12px; border-radius:8px; cursor:pointer; background:#17171f;
-  border:1px solid #333; transition:0.3s;
-}
-.server-tab.active { background:#333; border-color:#555; }
-.server-card {
-  margin-top:12px; background:#17171f; border-radius:12px; padding:15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-}
-.server-card h3 {
-  margin:0 0 8px 0; font-size:20px; color:#3399ff;
-}
-.server-card p {
-  margin:6px 0; font-size:16px;
-}
-.server-card .label {
-  color:#999; font-weight:bold;
-}
-footer { text-align:center; padding:20px; background:#111; font-size:16px; position:fixed; bottom:0; width:100%; }
-footer a { color:#3399ff; text-decoration:none; font-weight:bold; }
+body {margin:0; padding:0; font-family:Arial,sans-serif; background:#0f0f14; color:white;}
+header {text-align:center; padding:30px 20px; font-size:28px; font-weight:bold;}
+.project-card {display:flex; align-items:center; gap:20px; background:#17171f; padding:15px; border-radius:12px; margin:20px auto; max-width:500px; cursor:pointer; transition:0.3s;}
+.project-card:hover {transform: scale(1.02);}
+.project-icon {width:60px; height:60px; border-radius:10px; object-fit:cover;}
+.project-info {display:none; background:#22222a; border-radius:12px; padding:15px; margin:10px auto; max-width:500px;}
+.server-tabs {display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;}
+.server-tab {padding:6px 12px; border-radius:8px; cursor:pointer; background:#17171f; border:1px solid #333; transition:0.3s;}
+.server-tab.active {background:#333; border-color:#555;}
+.server-card {margin-top:12px; background:#17171f; border-radius:12px; padding:15px; box-shadow:0 4px 12px rgba(0,0,0,0.6);}
+.server-card h3 {margin:0 0 8px 0; font-size:20px; color:#3399ff;}
+.server-card p {margin:6px 0; font-size:16px;}
+.server-card .label {color:#999; font-weight:bold;}
+footer {text-align:center; padding:20px; background:#111; font-size:16px; position:fixed; bottom:0; width:100%;}
+footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
 </style>
 </head>
 <body>
@@ -133,6 +113,9 @@ function showServerCard(projectId,server){
   <p><span class="label">Онлайн сервера:</span> Временно недоступен</p>
   <p><span class="label">Главный Администратор:</span> -</p>
   <p><span class="label">Штат Главного Администратора:</span> -</p>
+  <p><span class="label">Игроков онлайн по фракциям:</span> -</p>
+  <p><span class="label">Дата открытия сервера:</span> -</p>
+  <p><span class="label">Особенности сервера:</span> -</p>
 </div>
   `;
 }
