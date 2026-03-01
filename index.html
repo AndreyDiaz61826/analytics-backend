@@ -7,60 +7,55 @@
 <style>
 body {margin:0; padding:0; font-family:Arial,sans-serif; background:#0f0f14; color:white;}
 header {text-align:center; padding:30px 20px; font-size:28px; font-weight:bold;}
-.project-card {display:flex; align-items:center; gap:20px; background:#17171f; padding:15px; border-radius:12px; margin:20px auto; max-width:500px; cursor:pointer; transition:0.3s;}
-.project-card:hover {transform: scale(1.02);}
-.project-icon {width:60px; height:60px; border-radius:10px; object-fit:cover;}
-.project-info {display:none; background:#22222a; border-radius:12px; padding:15px; margin:10px auto; max-width:500px;}
-.server-tabs {display:flex; flex-wrap:wrap; gap:6px; margin-top:10px;}
-.server-tab {padding:6px 12px; border-radius:8px; cursor:pointer; background:#17171f; border:1px solid #333; transition:0.3s;}
-.server-tab.active {background:#333; border-color:#555;}
-.server-card {margin-top:12px; background:#17171f; border-radius:12px; padding:15px; box-shadow:0 4px 12px rgba(0,0,0,0.6);}
-.server-card h3 {margin:0 0 8px 0; font-size:20px; color:#3399ff;}
-.server-card p {margin:6px 0; font-size:16px;}
-.server-card .label {color:#999; font-weight:bold;}
-/* Компактный footer */
+.container {max-width:600px; margin:20px auto;}
+.project-card, .server-card, .org-card, .job-card {background:#17171f; padding:15px; border-radius:12px; margin:10px 0; cursor:pointer; transition:0.3s;}
+.project-card:hover, .server-card:hover, .org-card:hover, .job-card:hover {transform:scale(1.02);}
+.project-icon {width:60px; height:60px; border-radius:10px; object-fit:cover; margin-right:15px;}
+.flex {display:flex; align-items:center;}
+.section-title {margin:10px 0; font-size:20px; color:#3399ff;}
+.menu {display:flex; flex-wrap:wrap; gap:6px; margin:10px 0;}
+.menu-item {padding:6px 12px; border-radius:8px; cursor:pointer; background:#17171f; border:1px solid #333; transition:0.3s;}
+.menu-item.active {background:#333; border-color:#555;}
+.card-title {font-size:18px; color:#33ccff; margin-bottom:6px;}
+.card-info p {margin:4px 0; font-size:14px;}
+.card-info .label {color:#999; font-weight:bold;}
+.back-btn {margin:10px 0; padding:6px 12px; background:#222; border:none; border-radius:8px; cursor:pointer; color:white;}
 footer {text-align:center; padding:6px 0; background:#111; font-size:12px; position:fixed; bottom:0; width:100%;}
 footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
+.hidden {display:none;}
 </style>
 </head>
 <body>
 
 <header>Новый Аналитический Центр 💎DARKS🍀</header>
 
-<!-- Arizona Online -->
-<div class="project-card" onclick="toggleProject('arizona')">
-  <img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="project-icon" alt="Arizona Online">
-  <h3>Arizona Online</h3>
-</div>
-<div id="arizona" class="project-info">
-  <h4>Информация о Arizona Online</h4>
-  <p>Общий онлайн проекта: -</p>
-  <div class="server-tabs" id="arizona-servers"></div>
-  <div id="arizona-server-info"></div>
-</div>
-
-<!-- Rodina Online -->
-<div class="project-card" onclick="toggleProject('rodina')">
-  <img src="IMG_20260301_192101_953.jpg" class="project-icon" alt="Rodina Online">
-  <h3>Rodina Online</h3>
-</div>
-<div id="rodina" class="project-info">
-  <h4>Информация о Rodina Online</h4>
-  <p>Общий онлайн проекта: -</p>
-  <div class="server-tabs" id="rodina-servers"></div>
-  <div id="rodina-server-info"></div>
+<div class="container" id="main-screen">
+  <div class="project-card flex" onclick="openProject('arizona')">
+    <img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="project-icon" alt="Arizona Online">
+    <h3>Arizona Online</h3>
+  </div>
+  <div class="project-card flex" onclick="openProject('rodina')">
+    <img src="IMG_20260301_192101_953.jpg" class="project-icon" alt="Rodina Online">
+    <h3>Rodina Online</h3>
+  </div>
+  <div class="project-card flex" onclick="openProject('amazing')">
+    <img src="IMG-20260301-WA0001.jpg" class="project-icon" alt="Amazing Online">
+    <h3>Amazing Online</h3>
+  </div>
 </div>
 
-<!-- Amazing Online -->
-<div class="project-card" onclick="toggleProject('amazing')">
-  <img src="IMG-20260301-WA0001.jpg" class="project-icon" alt="Amazing Online">
-  <h3>Amazing Online</h3>
+<div class="container hidden" id="server-screen">
+  <button class="back-btn" onclick="goBackToProjects()">← Назад к проектам</button>
+  <div class="section-title" id="server-project-name"></div>
+  <div class="menu" id="server-menu"></div>
+  <div id="server-info"></div>
 </div>
-<div id="amazing" class="project-info">
-  <h4>Информация о Amazing Online</h4>
-  <p>Общий онлайн проекта: -</p>
-  <div class="server-tabs" id="amazing-servers"></div>
-  <div id="amazing-server-info"></div>
+
+<div class="container hidden" id="org-screen">
+  <button class="back-btn" onclick="goBackToServers()">← Назад к серверам</button>
+  <div class="section-title" id="org-server-name"></div>
+  <div class="menu" id="org-menu"></div>
+  <div id="org-info"></div>
 </div>
 
 <footer>
@@ -68,56 +63,93 @@ footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
 </footer>
 
 <script>
-const projects={
-  arizona:[
-    "Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock",
-    "Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert",
-    "Show-Low","Casa-Grande","Page","Sun-City","Queen-Creek","Sedona","Holiday","Wednesday",
-    "Yava","Faraway","Bumble Bee","Christmas","Mirage","Love","Drake","Mobile 1","Mobile 2","Mobile 3"
+const projects = {
+  arizona:["Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock",
+  "Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert",
+  "Show-Low","Casa-Grande","Page","Sun-City","Queen-Creek","Sedona","Holiday","Wednesday",
+  "Yava","Faraway","Bumble Bee","Christmas","Mirage","Love","Drake","Mobile 1","Mobile 2","Mobile 3"],
+  
+  rodina:["Центральный округ","Южный округ","Северный округ","Восточный округ","Западный округ",
+  "Приморский округ","Федеральный округ","Москва","Санкт-Петербург"],
+  
+  amazing:["RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"]
+};
+
+const organizations = {
+  "Arizona Online":[
+    {name:"Правительство", description:"Органы управления штатом", leader:"Губернатор", deputies:"Замы", members:"-", extra:"Законы и контроль"},
+    {name:"Полиция Лос-Сантос", description:"Обеспечение правопорядка", leader:"Начальник", deputies:"Замы", members:"-", extra:"Патрули, аресты"},
+    {name:"FBI", description:"Федеральное расследование", leader:"Директор", deputies:"Замы", members:"-", extra:"Спецоперации"}
   ],
-  rodina:[
-    "Центральный округ","Южный округ","Северный округ","Восточный округ","Западный округ",
-    "Приморский округ","Федеральный округ","Москва","Санкт-Петербург"
+  "Rodina Online":[
+    {name:"Центральная полиция", description:"Поддержка порядка", leader:"Начальник", deputies:"Замы", members:"-", extra:"Патрули"},
+    {name:"Больница Джефферсон", description:"Медицинская помощь", leader:"Главврач", deputies:"Замы", members:"-", extra:"Лечение игроков"}
   ],
-  amazing:[
-    "RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"
+  "Amazing Online":[
+    {name:"RED Team", description:"Главная фракция", leader:"Лидер RED", deputies:"Замы", members:"-", extra:"События, задания"}
   ]
 };
 
-function toggleProject(projectId){
-  const el=document.getElementById(projectId);
-  el.style.display=el.style.display==='block'?'none':'block';
-  if(el.style.display==='block') renderServers(projectId);
-}
+const jobs = {
+  "Arizona Online":["Полицейский","Врач","Пожарный"],
+  "Rodina Online":["Полицейский","Врач"],
+  "Amazing Online":["Охранник","Сотрудник"]
+};
 
-function renderServers(projectId){
-  const container=document.getElementById(projectId+'-servers');
-  container.innerHTML='';
+function openProject(projectId){
+  document.getElementById("main-screen").classList.add("hidden");
+  document.getElementById("server-screen").classList.remove("hidden");
+  document.getElementById("server-project-name").textContent = projectId.charAt(0).toUpperCase() + projectId.slice(1) + " Online";
+  
+  const menu = document.getElementById("server-menu");
+  menu.innerHTML = "";
   projects[projectId].forEach(server=>{
-    const tab=document.createElement('div');
-    tab.textContent=server;
-    tab.className='server-tab';
-    tab.onclick=(e)=>{
-      Array.from(container.children).forEach(c=>c.classList.remove('active'));
-      e.currentTarget.classList.add('active');
-      showServerCard(projectId,server);
-    };
-    container.appendChild(tab);
+    const btn = document.createElement("div");
+    btn.textContent = server;
+    btn.className = "menu-item";
+    btn.onclick = () => openServer(projectId,server);
+    menu.appendChild(btn);
   });
 }
 
-function showServerCard(projectId,server){
-  const infoEl=document.getElementById(projectId+'-server-info');
-  infoEl.innerHTML=`
-<div class="server-card">
-  <h3>${server}</h3>
-  <p><span class="label">Онлайн сервера:</span> Временно недоступен</p>
-  <p><span class="label">Главный Администратор:</span> -</p>
-  <p><span class="label">Штат Главного Администратора:</span> -</p>
-  <p><span class="label">Игроков онлайн по фракциям:</span> -</p>
-  <p><span class="label">Дата открытия сервера:</span> -</p>
-  <p><span class="label">Особенности сервера:</span> -</p>
-</div>
+function goBackToProjects(){
+  document.getElementById("server-screen").classList.add("hidden");
+  document.getElementById("main-screen").classList.remove("hidden");
+}
+
+function openServer(projectId, server){
+  document.getElementById("server-screen").classList.add("hidden");
+  document.getElementById("org-screen").classList.remove("hidden");
+  document.getElementById("org-server-name").textContent = server;
+
+  const orgMenu = document.getElementById("org-menu");
+  orgMenu.innerHTML = "";
+  (organizations[projectId.charAt(0).toUpperCase() + projectId.slice(1) + " Online"] || []).forEach(org=>{
+    const btn = document.createElement("div");
+    btn.textContent = org.name;
+    btn.className = "menu-item";
+    btn.onclick = () => showOrgInfo(org);
+    orgMenu.appendChild(btn);
+  });
+}
+
+function goBackToServers(){
+  document.getElementById("org-screen").classList.add("hidden");
+  document.getElementById("server-screen").classList.remove("hidden");
+}
+
+function showOrgInfo(org){
+  document.getElementById("org-info").innerHTML=`
+    <div class="org-card">
+      <div class="card-title">${org.name}</div>
+      <div class="card-info">
+        <p><span class="label">Описание:</span> ${org.description}</p>
+        <p><span class="label">Лидер:</span> ${org.leader}</p>
+        <p><span class="label">Заместители:</span> ${org.deputies}</p>
+        <p><span class="label">Участники:</span> ${org.members}</p>
+        <p><span class="label">Дополнительно:</span> ${org.extra}</p>
+      </div>
+    </div>
   `;
 }
 </script>
