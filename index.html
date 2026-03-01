@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Новый Аналитический Центр 💎DARKS🍀</title>
+  <title>Аналитический Центр 💎DARKS🍀</title>
   <style>
     body {
       background: #0f0f14;
@@ -20,7 +20,7 @@
       font-weight: bold;
     }
 
-    .server-card {
+    .project-card {
       background: #17171f;
       padding: 20px;
       border-radius: 16px;
@@ -29,27 +29,42 @@
       display: flex;
       align-items: center;
       gap: 20px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.5);
+      cursor: pointer;
       transition: 0.3s;
     }
 
-    .server-card:hover {
+    .project-card:hover {
       transform: scale(1.03);
     }
 
-    .server-icon {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
+    .project-info {
+      display: none;
+      background: #22222a;
       border-radius: 14px;
+      padding: 15px;
+      margin: 10px auto;
+      max-width: 500px;
     }
 
-    .server-card h3 {
-      margin: 0 0 5px 0;
+    .server-list {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
-    .server-card p {
-      margin: 2px 0;
+    .server-list button {
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: #ff6bf0;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .server-list button:hover {
+      background: #e055d5;
     }
 
     footer {
@@ -71,69 +86,55 @@
 </head>
 <body>
 
-  <header>Новый Аналитический Центр 💎DARKS🍀</header>
+<header>Новый Аналитический Центр 💎DARKS🍀</header>
 
-  <!-- Arizona Online -->
-  <div class="server-card">
-    <img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="server-icon" alt="Arizona Online">
-    <div>
-      <h3>Arizona Online</h3>
-      <p>Онлайн: <span id="arizona-online">-</span></p>
-      <p>Статус: <span id="arizona-status">OFFLINE</span></p>
-    </div>
+<!-- Arizona Online -->
+<div class="project-card" onclick="toggleProject('arizona')">
+  <h3>Arizona Online</h3>
+</div>
+<div id="arizona" class="project-info">
+  <h4>Сервера Arizona Online</h4>
+  <div class="server-list">
+    Phoenix, Tucson, Scottdale, Chandler, Brainburg, Saint-Rose, Mesa, Red-Rock, Yuma, Surprise,
+    Prescott, Glendale, Kingman, Winslow, Payson, Gilbert, Show-Low, Casa-Grande, Page, Sun-City,
+    Queen-Creek, Sedona, Holiday, Wednesday, Yava, Faraway, Bumble Bee, Christmas, Mirage, Love, Drake,
+    Mobile 1, Mobile 2, Mobile 3
   </div>
+</div>
 
-  <!-- Rodina Online -->
-  <div class="server-card">
-    <img src="IMG_20260301_192101_953.jpg" class="server-icon" alt="Rodina Online">
-    <div>
-      <h3>Rodina Online</h3>
-      <p>Онлайн: <span id="rodina-online">-</span></p>
-      <p>Статус: <span id="rodina-status">OFFLINE</span></p>
-    </div>
+<!-- Rodina Online -->
+<div class="project-card" onclick="toggleProject('rodina')">
+  <h3>Rodina Online</h3>
+</div>
+<div id="rodina" class="project-info">
+  <h4>Сервера Rodina Online</h4>
+  <div class="server-list">
+    Центральный округ, Южный округ, Северный округ, Восточный округ, Западный округ,
+    Приморский округ, Федеральный округ, Москва, Санкт-Петербург
   </div>
+</div>
 
-  <!-- Amazing Online -->
-  <div class="server-card">
-    <img src="IMG-20260301-WA0001.jpg" class="server-icon" alt="Amazing Online">
-    <div>
-      <h3>Amazing Online</h3>
-      <p>Онлайн: <span id="amazing-online">-</span></p>
-      <p>Статус: <span id="amazing-status">OFFLINE</span></p>
-    </div>
+<!-- Amazing Online -->
+<div class="project-card" onclick="toggleProject('amazing')">
+  <h3>Amazing Online</h3>
+</div>
+<div id="amazing" class="project-info">
+  <h4>Сервера Amazing Online</h4>
+  <div class="server-list">
+    RED, YELLOW, GREEN, AZURE, SILVER, ROSE, BLACK, SKY, TITAN, X, FIRE, LIME
   </div>
+</div>
 
-  <footer>
-    Подключайся к нашему Discord серверу: <a href="https://discord.gg/yhzmfQVNx" target="_blank">✨Dark Straiwels✨</a>
-  </footer>
+<footer>
+  Подключайся к нашему Discord серверу: <a href="https://discord.gg/yhzmfQVNx" target="_blank">✨Dark Straiwels✨</a>
+</footer>
 
-  <script>
-    const BASE_URL = 'https://analytics-backend-production.up.railway.app';
-
-    function fetchServerData(serverId, onlineElId, statusElId) {
-      fetch(`${BASE_URL}/server/${serverId}`)
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById(onlineElId).textContent = data.online;
-          document.getElementById(statusElId).textContent = data.status?.toUpperCase() || 'ONLINE';
-        })
-        .catch(() => {
-          document.getElementById(statusElId).textContent = 'OFFLINE';
-        });
-    }
-
-    // ID серверов (замени на реальные, если будут другие)
-    fetchServerData('9767606', 'arizona-online', 'arizona-status'); // Arizona Online
-    fetchServerData('9767607', 'rodina-online', 'rodina-status');   // Rodina Online
-    fetchServerData('1234567', 'amazing-online', 'amazing-status'); // Amazing Online
-
-    // Автообновление каждые 30 секунд
-    setInterval(() => {
-      fetchServerData('9767606', 'arizona-online', 'arizona-status');
-      fetchServerData('9767607', 'rodina-online', 'rodina-status');
-      fetchServerData('1234567', 'amazing-online', 'amazing-status');
-    }, 30000);
-  </script>
+<script>
+  function toggleProject(projectId) {
+    const el = document.getElementById(projectId);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
 
 </body>
 </html>
