@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Аналитический Центр 💎DARKS🍀</title>
+  <title>Новый Аналитический Центр 💎DARKS🍀</title>
   <style>
     body {
       background: #0f0f14;
@@ -75,7 +75,7 @@
 
   <!-- Arizona -->
   <div class="server-card">
-    <img src="arizona.png" class="server-icon" alt="Arizona">
+    <img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="server-icon" alt="Arizona">
     <div>
       <h3>Arizona Mobile 3</h3>
       <p>Онлайн: <span id="arizona-online">-</span></p>
@@ -85,7 +85,7 @@
 
   <!-- Rodina -->
   <div class="server-card">
-    <img src="rodina.png" class="server-icon" alt="Rodina">
+    <img src="IMG_20260301_192101_953.jpg" class="server-icon" alt="Rodina">
     <div>
       <h3>Rodina RP</h3>
       <p>Онлайн: <span id="rodina-online">-</span></p>
@@ -95,7 +95,7 @@
 
   <!-- Amazing Online -->
   <div class="server-card">
-    <img src="amazing.png" class="server-icon" alt="Amazing Online">
+    <img src="IMG-20260301-WA0001.jpg" class="server-icon" alt="Amazing Online">
     <div>
       <h3>Amazing Online</h3>
       <p>Онлайн: <span id="amazing-online">-</span></p>
@@ -115,14 +115,14 @@
         .then(res => res.json())
         .then(data => {
           document.getElementById(onlineElId).textContent = data.online;
-          document.getElementById(statusElId).textContent = data.status.toUpperCase();
+          document.getElementById(statusElId).textContent = data.status?.toUpperCase() || 'ONLINE';
         })
         .catch(() => {
           document.getElementById(statusElId).textContent = 'OFFLINE';
         });
     }
 
-    // Начальная загрузка данных
+    // ID серверов (замени на реальные, если будут другие)
     fetchServerData('9767606', 'arizona-online', 'arizona-status'); // Arizona
     fetchServerData('9767607', 'rodina-online', 'rodina-status');   // Rodina
     fetchServerData('1234567', 'amazing-online', 'amazing-status'); // Amazing Online
