@@ -25,7 +25,19 @@ header {
   border:1px solid #333; transition:0.3s;
 }
 .server-tab.active { background:#333; border-color:#555; }
-.server-info { margin-top:12px; padding:10px; background:#17171f; border-radius:10px; white-space:pre-line; }
+.server-card {
+  margin-top:12px; background:#17171f; border-radius:12px; padding:15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+.server-card h3 {
+  margin:0 0 8px 0; font-size:20px; color:#3399ff;
+}
+.server-card p {
+  margin:6px 0; font-size:16px;
+}
+.server-card .label {
+  color:#999; font-weight:bold;
+}
 footer { text-align:center; padding:20px; background:#111; font-size:16px; position:fixed; bottom:0; width:100%; }
 footer a { color:#3399ff; text-decoration:none; font-weight:bold; }
 </style>
@@ -43,7 +55,7 @@ footer a { color:#3399ff; text-decoration:none; font-weight:bold; }
   <h4>Информация о Arizona Online</h4>
   <p>Общий онлайн проекта: -</p>
   <div class="server-tabs" id="arizona-servers"></div>
-  <div class="server-info" id="arizona-server-info">Выберите сервер для просмотра информации</div>
+  <div id="arizona-server-info"></div>
 </div>
 
 <!-- Rodina Online -->
@@ -55,7 +67,7 @@ footer a { color:#3399ff; text-decoration:none; font-weight:bold; }
   <h4>Информация о Rodina Online</h4>
   <p>Общий онлайн проекта: -</p>
   <div class="server-tabs" id="rodina-servers"></div>
-  <div class="server-info" id="rodina-server-info">Выберите сервер для просмотра информации</div>
+  <div id="rodina-server-info"></div>
 </div>
 
 <!-- Amazing Online -->
@@ -67,7 +79,7 @@ footer a { color:#3399ff; text-decoration:none; font-weight:bold; }
   <h4>Информация о Amazing Online</h4>
   <p>Общий онлайн проекта: -</p>
   <div class="server-tabs" id="amazing-servers"></div>
-  <div class="server-info" id="amazing-server-info">Выберите сервер для просмотра информации</div>
+  <div id="amazing-server-info"></div>
 </div>
 
 <footer>
@@ -75,7 +87,7 @@ footer a { color:#3399ff; text-decoration:none; font-weight:bold; }
 </footer>
 
 <script>
-const projects = {
+const projects={
   arizona:[
     "Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock",
     "Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert",
@@ -105,22 +117,24 @@ function renderServers(projectId){
     tab.textContent=server;
     tab.className='server-tab';
     tab.onclick=(e)=>{
-      // снять актив с других
       Array.from(container.children).forEach(c=>c.classList.remove('active'));
       e.currentTarget.classList.add('active');
-      showServerInfo(projectId,server);
+      showServerCard(projectId,server);
     };
     container.appendChild(tab);
   });
 }
 
-function showServerInfo(projectId,server){
+function showServerCard(projectId,server){
   const infoEl=document.getElementById(projectId+'-server-info');
-  infoEl.textContent=
-`Название сервера: ${server}
-Онлайн сервера: Временно недоступен
-Главный Администратор: 
-Штат Главного Администратора: `;
+  infoEl.innerHTML=`
+<div class="server-card">
+  <h3>${server}</h3>
+  <p><span class="label">Онлайн сервера:</span> Временно недоступен</p>
+  <p><span class="label">Главный Администратор:</span> -</p>
+  <p><span class="label">Штат Главного Администратора:</span> -</p>
+</div>
+  `;
 }
 </script>
 
