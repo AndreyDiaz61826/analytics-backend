@@ -8,8 +8,8 @@
 body {margin:0; padding:0; font-family:Arial,sans-serif; background:#0f0f14; color:white;}
 header {text-align:center; padding:30px 20px; font-size:28px; font-weight:bold;}
 .container {max-width:600px; margin:20px auto;}
-.project-card, .server-card, .org-card, .job-card {background:#17171f; padding:15px; border-radius:12px; margin:10px 0; cursor:pointer; transition:0.3s;}
-.project-card:hover, .server-card:hover, .org-card:hover, .job-card:hover {transform:scale(1.02);}
+.project-card, .server-card, .org-card {background:#17171f; padding:15px; border-radius:12px; margin:10px 0; cursor:pointer; transition:0.3s;}
+.project-card:hover, .server-card:hover, .org-card:hover {transform:scale(1.02);}
 .project-icon {width:60px; height:60px; border-radius:10px; object-fit:cover; margin-right:15px;}
 .flex {display:flex; align-items:center;}
 .section-title {margin:10px 0; font-size:20px; color:#3399ff;}
@@ -20,9 +20,9 @@ header {text-align:center; padding:30px 20px; font-size:28px; font-weight:bold;}
 .card-info p {margin:4px 0; font-size:14px;}
 .card-info .label {color:#999; font-weight:bold;}
 .back-btn {margin:10px 0; padding:6px 12px; background:#222; border:none; border-radius:8px; cursor:pointer; color:white;}
+.hidden {display:none;}
 footer {text-align:center; padding:6px 0; background:#111; font-size:12px; position:fixed; bottom:0; width:100%;}
 footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
-.hidden {display:none;}
 </style>
 </head>
 <body>
@@ -48,13 +48,20 @@ footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
   <button class="back-btn" onclick="goBackToProjects()">← Назад к проектам</button>
   <div class="section-title" id="server-project-name"></div>
   <div class="menu" id="server-menu"></div>
-  <div id="server-info"></div>
-</div>
-
-<div class="container hidden" id="org-screen">
-  <button class="back-btn" onclick="goBackToServers()">← Назад к серверам</button>
-  <div class="section-title" id="org-server-name"></div>
+  
+  <!-- Блок информации о сервере -->
+  <div id="server-info" class="server-card">
+    <p><span class="label">Онлайн сервера:</span> Временно недоступен</p>
+    <p><span class="label">Главный Администратор:</span> -</p>
+    <p><span class="label">Штат Главного Администратора:</span> -</p>
+    <p><span class="label">Дата открытия сервера:</span> -</p>
+  </div>
+  
+  <!-- Меню организаций -->
+  <div class="section-title">Выберите организацию:</div>
   <div class="menu" id="org-menu"></div>
+  
+  <!-- Карточка выбранной организации -->
   <div id="org-info"></div>
 </div>
 
@@ -63,6 +70,7 @@ footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
 </footer>
 
 <script>
+// Списки серверов
 const projects = {
   arizona:["Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock",
   "Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert",
@@ -75,6 +83,7 @@ const projects = {
   amazing:["RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"]
 };
 
+// Списки организаций
 const organizations = {
   "Arizona Online":[
     {name:"Правительство", description:"Органы управления штатом", leader:"Губернатор", deputies:"Замы", members:"-", extra:"Законы и контроль"},
@@ -90,56 +99,65 @@ const organizations = {
   ]
 };
 
-const jobs = {
-  "Arizona Online":["Полицейский","Врач","Пожарный"],
-  "Rodina Online":["Полицейский","Врач"],
-  "Amazing Online":["Охранник","Сотрудник"]
-};
-
+// Открытие проекта
 function openProject(projectId){
   document.getElementById("main-screen").classList.add("hidden");
   document.getElementById("server-screen").classList.remove("hidden");
-  document.getElementById("server-project-name").textContent = projectId.charAt(0).toUpperCase() + projectId.slice(1) + " Online";
-  
+  const projectName = projectId.charAt(0).toUpperCase() + projectId.slice(1) + " Online";
+  document.getElementById("server-project-name").textContent = projectName;
+
+  // Список серверов
   const menu = document.getElementById("server-menu");
   menu.innerHTML = "";
   projects[projectId].forEach(server=>{
     const btn = document.createElement("div");
     btn.textContent = server;
     btn.className = "menu-item";
-    btn.onclick = () => openServer(projectId,server);
+    btn.onclick = () => loadServer(projectName, server);
     menu.appendChild(btn);
   });
 }
 
+// Возврат к проектам
 function goBackToProjects(){
   document.getElementById("server-screen").classList.add("hidden");
   document.getElementById("main-screen").classList.remove("hidden");
+  document.getElementById("org-info").innerHTML = "";
+  document.getElementById("org-menu").innerHTML = "";
 }
 
-function openServer(projectId, server){
-  document.getElementById("server-screen").classList.add("hidden");
-  document.getElementById("org-screen").classList.remove("hidden");
-  document.getElementById("org-server-name").textContent = server;
+// Загрузка информации о сервере
+function loadServer(projectName, server){
+  document.getElementById("server-info").innerHTML = `
+    <div class="server-card">
+      <div class="card-title">${server}</div>
+      <div class="card-info">
+        <p><span class="label">Онлайн сервера:</span> Временно недоступен</p>
+        <p><span class="label">Главный Администратор:</span> -</p>
+        <p><span class="label">Штат Главного Администратора:</span> -</p>
+        <p><span class="label">Дата открытия сервера:</span> -</p>
+      </div>
+    </div>
+  `;
 
+  // Меню организаций для выбранного сервера
   const orgMenu = document.getElementById("org-menu");
   orgMenu.innerHTML = "";
-  (organizations[projectId.charAt(0).toUpperCase() + projectId.slice(1) + " Online"] || []).forEach(org=>{
+  (organizations[projectName] || []).forEach(org=>{
     const btn = document.createElement("div");
     btn.textContent = org.name;
     btn.className = "menu-item";
     btn.onclick = () => showOrgInfo(org);
     orgMenu.appendChild(btn);
   });
+
+  // Сброс карточки организации
+  document.getElementById("org-info").innerHTML = "";
 }
 
-function goBackToServers(){
-  document.getElementById("org-screen").classList.add("hidden");
-  document.getElementById("server-screen").classList.remove("hidden");
-}
-
+// Показ информации об организации
 function showOrgInfo(org){
-  document.getElementById("org-info").innerHTML=`
+  document.getElementById("org-info").innerHTML = `
     <div class="org-card">
       <div class="card-title">${org.name}</div>
       <div class="card-info">
