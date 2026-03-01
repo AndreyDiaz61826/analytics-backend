@@ -23,7 +23,7 @@ header {text-align:center; padding:30px 20px; font-size:28px; font-weight:bold;}
 .hidden {display:none;}
 footer {text-align:center; padding:6px 0; background:#111; font-size:12px; position:fixed; bottom:0; width:100%;}
 footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
-.org-btn {padding:6px 10px; margin-top:10px; background:#222; border-radius:8px; cursor:pointer; border:1px solid #333;}
+.org-btn {padding:6px 10px; margin-top:6px; background:#222; border-radius:8px; cursor:pointer; border:1px solid #333;}
 </style>
 </head>
 <body>
@@ -52,12 +52,9 @@ footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
   <div class="section-title" id="server-project-name"></div>
   <div class="menu" id="server-menu"></div>
   
+  <!-- Карточка сервера с кнопкой "Организации: Выбрать" -->
   <div id="server-info" class="server-card"></div>
   
-  <div style="margin-top:10px;">
-    <span class="label">Организации:</span>
-    <button class="org-btn" onclick="toggleOrgMenu()">Выбрать</button>
-  </div>
   <div class="menu hidden" id="org-menu"></div>
 </div>
 
@@ -93,7 +90,7 @@ const serverDetails = {
   // остальные можно добавить
 };
 
-// Организации (полный список примера)
+// Полный список организаций
 const orgList = [
   {name:"Правительство", private:false, leader:"Губернатор", deputies:"Замы", members:"-", purch:"Есть"},
   {name:"ФБР", private:false, leader:"Директор", deputies:"Замы", members:"-", purch:"Нет"},
@@ -134,16 +131,17 @@ function goBackToProjects(){
 // Загрузка информации о сервере
 function loadServer(projectName, server){
   const info = serverDetails[server] || {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"};
-  document.getElementById("server-info").innerHTML = `
-    <div class="server-card">
-      <p><span class="label">Название проекта:</span> ${projectName}</p>
-      <p><span class="label">Название сервера:</span> ${server}</p>
-      <p><span class="label">Главный Администратор:</span> ${info.admin}</p>
-      <p><span class="label">Заместитель Главного Администратора:</span> ${info.deputy}</p>
-      <p><span class="label">Общий онлайн:</span> ${info.online}</p>
-      <p><span class="label">Описание сервера:</span> ${info.desc}</p>
-    </div>
+  const serverInfoDiv = document.getElementById("server-info");
+  serverInfoDiv.innerHTML = `
+    <p><span class="label">Название проекта:</span> ${projectName}</p>
+    <p><span class="label">Название сервера:</span> ${server}</p>
+    <p><span class="label">Главный Администратор:</span> ${info.admin}</p>
+    <p><span class="label">Заместитель Главного Администратора:</span> ${info.deputy}</p>
+    <p><span class="label">Общий онлайн:</span> ${info.online}</p>
+    <p><span class="label">Описание сервера:</span> ${info.desc}</p>
+    <p><span class="label">Организации:</span> <button class="org-btn" onclick="toggleOrgMenu()">Выбрать</button></p>
   `;
+  document.getElementById("org-menu").classList.add("hidden");
 }
 
 // Показать/скрыть меню организаций
