@@ -1,0 +1,146 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Analentic Projects Stats</title>
+  <style>
+    body {
+      background-color: #121212; /* тёмная тема */
+      color: #e0e0e0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1f1f1f;
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .tab {
+      padding: 10px 20px;
+      margin: 0 5px;
+      cursor: pointer;
+      background-color: #2b2b2b;
+      border-radius: 5px;
+    }
+    .tab.active {
+      background-color: #4a90e2;
+      color: #fff;
+    }
+    .content {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #1f1f1f;
+      border-radius: 8px;
+    }
+    .server {
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #2b2b2b;
+      border-radius: 5px;
+    }
+    .status-online {
+      color: #4caf50;
+      font-weight: bold;
+    }
+    .status-offline {
+      color: #f44336;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<header>Новый Аналитический Центр 💎DARKS🍀</header>
+
+<div class="tabs">
+  <div class="tab active" data-project="arizona">Arizona RP</div>
+  <div class="tab" data-project="rodina">Rodina RP</div>
+</div>
+
+<div class="content" id="project-content">
+  <p>Выберите сервер чтобы увидеть онлайн...</p>
+</div>
+
+<script>
+const BASE_URL = 'https://analytics-backend-production.up.railway.app'; // твой backend
+
+const projects = {
+  arizona: [
+    { name: 'Arizona Main', id: '9767606' },
+    { name: 'Arizona 3-Mobile', id: '9767607' }
+  ],
+  rodina: [
+    { name: 'Rodina Main', id: '1234567' } // пример
+  ]
+};
+
+const tabs = document.querySelectorAll('.tab');
+const contentDiv = document.getElementById('project-content');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const project = tab.dataset.project;
+    renderServers(project);
+  });
+});
+
+function renderServers(project) {
+  const servers = projects[project];
+  contentDiv.innerHTML = '';
+  servers.forEach(server => {
+    const div = document.createElement('div');
+    div.className = 'server';
+    div.innerHTML = `
+      <h3>${server.name}</h3>
+      <p>Онлайн: <span id="online-${server.id}">Загрузка...</span></p>
+      <p>Статус: <span id="status-${server.id}">Загрузка...</span></p>
+    `;
+    contentDiv.appendChild(div);
+    fetchServerData(server.id);
+  });
+}
+
+function fetchServerData(serverId) {
+  fetch(`${BASE_URL}/server/${serverId}`)
+    .then(res => res.json())
+    .then(data => {
+      const onlineEl = document.getElementById(`online-${serverId}`);
+      const statusEl = document.getElementById(`status-${serverId}`);
+      onlineEl.innerText = data.online;
+      statusEl.innerText = data.status.toUpperCase();
+      statusEl.className = data.status === 'online' ? 'status-online' : 'status-offline';
+    })
+    .catch(err => {
+      const onlineEl = document.getElementById(`online-${serverId}`);
+      const statusEl = document.getElementById(`status-${serverId}`);
+      onlineEl.innerText = '-';
+      statusEl.innerText = 'OFFLINE';
+      statusEl.className = 'status-offline';
+    });
+}
+
+// Авто-обновление каждые 30 секунд
+setInterval(() => {
+  const activeTab = document.querySelector('.tab.active').dataset.project;
+  projects[activeTab].forEach(server => fetchServerData(server.id));
+}, 30000);
+
+// Инициализация первой вкладки
+renderServers('arizona');
+
+</script>
+
+</body>
+</html>
