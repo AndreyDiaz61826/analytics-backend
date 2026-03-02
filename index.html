@@ -6,87 +6,84 @@
 <title>Аналитический Центр</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 body{
     margin:0;
-    font-family:'Inter', sans-serif;
-    background: radial-gradient(circle at top, #1a1a2e 0%, #0f0f1a 40%, #070710 100%);
-    color:#fff;
+    font-family:Arial, sans-serif;
+    background:#0e0e13;
+    color:#ffffff;
 }
 
 header{
     text-align:center;
-    padding:30px;
-    font-size:28px;
-    font-weight:700;
+    padding:25px;
+    font-size:26px;
+    font-weight:bold;
+    background:#111118;
+    box-shadow:0 2px 10px rgba(0,0,0,0.6);
 }
 
 .container{
-    max-width:800px;
-    margin:0 auto 50px auto;
-    padding:0 20px;
+    max-width:750px;
+    margin:20px auto;
+    padding:0 15px;
 }
 
 .tab-card{
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(12px);
-    padding:20px;
-    border-radius:18px;
-    margin:15px 0;
+    background:#181823;
+    padding:18px;
+    border-radius:14px;
+    margin:12px 0;
     cursor:pointer;
-    transition:all 0.3s ease;
-    border:1px solid rgba(255,255,255,0.08);
-    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+    transition:0.25s;
+    border:1px solid #222;
 }
 
 .tab-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 15px 40px rgba(42,108,255,0.4);
-    border-color:#2a6cff;
+    background:#20202d;
+    transform:translateY(-3px);
+    box-shadow:0 6px 18px rgba(0,0,0,0.5);
 }
 
 .project-card{
     display:flex;
     align-items:center;
-    gap:18px;
+    gap:15px;
 }
 
 .project-icon{
-    width:65px;
-    height:65px;
-    border-radius:16px;
+    width:60px;
+    height:60px;
+    border-radius:12px;
     object-fit:cover;
 }
 
 .section-title{
-    font-size:20px;
-    margin:30px 0 15px 0;
-    font-weight:600;
-    color:#7faaff;
+    font-size:18px;
+    margin:20px 0 10px 0;
+    color:#4db8ff;
 }
 
 .info-box{
-    background:rgba(255,255,255,0.04);
-    padding:22px;
-    border-radius:18px;
+    background:#181823;
+    padding:18px;
+    border-radius:14px;
     margin-bottom:20px;
+    border:1px solid #222;
 }
 
 .label{
-    color:#9aa0ff;
-    font-weight:600;
+    color:#8a8a8a;
+    font-weight:bold;
 }
 
 .back-btn{
-    background:#2a6cff;
-    border:none;
-    padding:8px 18px;
-    border-radius:12px;
+    background:#1f1f2b;
+    border:1px solid #333;
+    padding:6px 14px;
+    border-radius:8px;
     cursor:pointer;
     color:white;
-    font-weight:600;
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 
 .hidden{
@@ -101,37 +98,43 @@ header{
 <div class="container" id="main-screen">
 
 <div class="tab-card project-card" onclick="openProject('arizona')">
+<img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="project-icon">
 <h3>Arizona Online</h3>
 </div>
 
 <div class="tab-card project-card" onclick="openProject('rodina')">
+<img src="IMG_20260301_192101_953.jpg" class="project-icon">
 <h3>Rodina Online</h3>
 </div>
 
 <div class="tab-card project-card" onclick="openProject('amazing')">
+<img src="IMG-20260301-WA0001.jpg" class="project-icon">
 <h3>Amazing Online</h3>
 </div>
 
 </div>
 
 <div class="container hidden" id="project-screen">
-<button class="back-btn" onclick="goHome()">Назад</button>
+<button class="back-btn" onclick="goHome()">← Назад</button>
 <div id="project-info"></div>
 <div class="section-title">Сервера</div>
 <div id="server-list"></div>
 </div>
 
 <div class="container hidden" id="server-screen">
-<button class="back-btn" onclick="goBackToProject()">Назад</button>
+<button class="back-btn" onclick="goBackToProject()">← Назад</button>
 <div id="server-info"></div>
+
 <div class="section-title">Государственные организации</div>
 <div id="org-list"></div>
+
 <div class="section-title">Преступные организации</div>
 <div id="crime-list"></div>
+
 </div>
 
 <div class="container hidden" id="org-screen">
-<button class="back-btn" onclick="goBackToServer()">Назад</button>
+<button class="back-btn" onclick="goBackToServer()">← Назад</button>
 <div id="org-info"></div>
 </div>
 
@@ -142,17 +145,38 @@ const projects = {
 arizona:{
 name:"Arizona Online",
 online:"15000+",
-servers:["Phoenix","Tucson"],
-organizations:["Правительство","ФБР"],
-crime:["Russian Mafia"]
+servers:["Phoenix","Tucson","Scottdale","Chandler"],
+organizations:["Правительство","ФБР","ЛСПД","ЛВПД","СФПД","РКШД","БОЛЬНИЦА ДЖЕФЕРСОН","БОЛЬНИЦА СФ","БОЛЬНИЦА ЛС","БОЛЬНИЦА ЛВ","СМИ ЛС","СМИ ЛВ","СМИ СФ"],
+crime:["Russian Mafia","Yakuza","La Cosa Nostra","Warlock MC","Tierra Robada Bikers"]
 },
 
 rodina:{
 name:"Rodina Online",
 online:"9000+",
 servers:["Арзамас","Эдово"],
-organizations:["ФСБ","МВД","Армия"],
-crime:["Русская мафия"]
+organizations:[
+"Правительство (Мэрия округа)",
+"ФСБ",
+"МВД",
+"ГИБДД",
+"ГУВД (Арзамас/Эдово)",
+"Министерство обороны",
+"Армия (Сухопутные войска)",
+"Министерство здравоохранения",
+"МЦА (Больница г. Арзамаса)",
+"МЦЭ (Больница г. Эдово)",
+"СМИ (Радиоцентры)",
+"ФСИН",
+"Центр лицензирования (Автошкола)"
+],
+crime:[
+"Русская мафия",
+"Украинская мафия",
+"Кавказская мафия",
+"Черная кошка",
+"Санитары",
+"Фантомасы"
+]
 },
 
 amazing:{
@@ -170,7 +194,6 @@ let currentServer=null;
 
 function openProject(id){
 currentProject=id;
-
 document.getElementById("main-screen").classList.add("hidden");
 document.getElementById("project-screen").classList.remove("hidden");
 
@@ -179,7 +202,7 @@ const p=projects[id];
 document.getElementById("project-info").innerHTML=`
 <div class="info-box">
 <p><span class="label">Название проекта:</span> ${p.name}</p>
-<p><span class="label">Онлайн:</span> ${p.online}</p>
+<p><span class="label">Общий онлайн:</span> ${p.online}</p>
 </div>
 `;
 
@@ -202,8 +225,8 @@ document.getElementById("server-screen").classList.remove("hidden");
 
 document.getElementById("server-info").innerHTML=`
 <div class="info-box">
-<p><span class="label">Проект:</span> ${projects[currentProject].name}</p>
-<p><span class="label">Сервер:</span> ${server}</p>
+<p><span class="label">Название проекта:</span> ${projects[currentProject].name}</p>
+<p><span class="label">Название сервера:</span> ${server}</p>
 </div>
 `;
 
@@ -234,9 +257,9 @@ document.getElementById("org-screen").classList.remove("hidden");
 
 document.getElementById("org-info").innerHTML=`
 <div class="info-box">
-<p><span class="label">Сервер:</span> ${currentServer}</p>
-<p><span class="label">Организация:</span> ${org}</p>
-<p><span class="label">Информация:</span> Будет добавлена позже</p>
+<p><span class="label">Название сервера:</span> ${currentServer}</p>
+<p><span class="label">Название организации:</span> ${org}</p>
+<p><span class="label">Информация:</span> Информация будет добавлена позже.</p>
 </div>
 `;
 }
