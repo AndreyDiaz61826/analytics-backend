@@ -36,6 +36,9 @@ header{
     cursor:pointer;
     transition:0.25s;
     border:1px solid #222;
+    display:flex;
+    align-items:center;
+    gap:15px;
 }
 
 .tab-card:hover{
@@ -44,10 +47,11 @@ header{
     box-shadow:0 6px 18px rgba(0,0,0,0.5);
 }
 
-.project-card{
-    display:flex;
-    align-items:center;
-    gap:15px;
+.project-card img{
+    width:50px;
+    height:50px;
+    border-radius:8px;
+    object-fit:cover;
 }
 
 .section-title{
@@ -90,16 +94,22 @@ header{
 
 <div class="container" id="main-screen">
 
+<!-- Arizona Online -->
 <div class="tab-card project-card" onclick="openProject('arizona')">
-<h3>Arizona Online</h3>
+  <img src="images/ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" alt="Arizona Online">
+  <h3>Arizona Online</h3>
 </div>
 
+<!-- Rodina Online -->
 <div class="tab-card project-card" onclick="openProject('rodina')">
-<h3>Rodina Online</h3>
+  <img src="images/IMG_20260301_192101_953.jpg" alt="Rodina Online">
+  <h3>Rodina Online</h3>
 </div>
 
+<!-- Amazing Online -->
 <div class="tab-card project-card" onclick="openProject('amazing')">
-<h3>Amazing Online</h3>
+  <img src="images/IMG-20260301-WA0001.jpg" alt="Amazing Online">
+  <h3>Amazing Online</h3>
 </div>
 
 </div>
@@ -114,144 +124,40 @@ header{
 <div class="container hidden" id="server-screen">
 <button class="back-btn" onclick="goBackToProject()">← Назад</button>
 <div id="server-info"></div>
-
-<div class="section-title">Государственные организации</div>
-<div id="org-list"></div>
-
-<div class="section-title">Преступные организации</div>
-<div id="crime-list"></div>
-</div>
-
-<div class="container hidden" id="org-screen">
-<button class="back-btn" onclick="goBackToServer()">← Назад</button>
-<div id="org-info"></div>
 </div>
 
 <script>
-
 const projects = {
 
-// Arizona Online (реальный список серверов)
+// Arizona Online
 arizona:{
 name:"Arizona Online",
 online:"15000+",
 servers:[
-"Phoenix",
-"Tucson",
-"Scottdale",
-"Chandler",
-"Brainburg",
-"Saint-Rose",
-"Mesa",
-"Red-Rock",
-"Yuma",
-"Surprise",
-"Prescott",
-"Glendale",
-"Kingman",
-"Winslow",
-"Payson",
-"Gilbert",
-"Show-Low",
-"Casa-Grande",
-"Page",
-"Sun-City",
-"Queen-Creek",
-"Sedona",
-"Holiday"
-],
-organizations:[
-"Правительство",
-"ФБР",
-"ЛСПД",
-"ЛВПД",
-"СФПД",
-"РКШД",
-"БОЛЬНИЦА ДЖЕФФЕРСОН",
-"БОЛЬНИЦА СФ",
-"БОЛЬНИЦА ЛС",
-"БОЛЬНИЦА ЛВ",
-"СМИ ЛС",
-"СМИ ЛВ",
-"СМИ СФ"
-],
-crime:[
-"Russian Mafia",
-"Yakuza",
-"La Cosa Nostra",
-"Warlock MC",
-"Tierra Robada Bikers"
+"Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose",
+"Mesa","Red-Rock","Yuma","Surprise","Prescott","Glendale",
+"Kingman","Winslow","Payson","Gilbert","Show-Low","Casa-Grande",
+"Page","Sun-City","Queen-Creek","Sedona","Holiday"
 ]
 },
 
+// Rodina Online
 rodina:{
 name:"Rodina Online",
 online:"9000+",
 servers:[
-"Арзамас",
-"Эдово",
-"Южный округ",
-"Северный округ",
-"Западный округ",
-"Центральный округ",
-"Восточный округ",
-"Москва",
-"Санкт-Петербург"
-],
-organizations:[
-"Правительство (Мэрия округа)",
-"ФСБ",
-"МВД",
-"ГИБДД",
-"ГУВД (Арзамас/Эдово)",
-"Министерство обороны",
-"Армия (Сухопутные войска)",
-"Министерство здравоохранения",
-"МЦА (Больница г. Арзамаса)",
-"МЦЭ (Больница г. Эдово)",
-"СМИ (Радиоцентры)",
-"ФСИН",
-"Центр лицензирования (Автошкола)"
-],
-crime:[
-"Русская мафия",
-"Украинская мафия",
-"Кавказская мафия",
-"Черная кошка",
-"Санитары",
-"Фантомасы"
+"Арзамас","Эдово","Южный округ","Северный округ","Западный округ",
+"Центральный округ","Восточный округ","Москва","Санкт-Петербург"
 ]
 },
 
+// Amazing Online
 amazing:{
 name:"Amazing Online",
 online:"7000+",
 servers:[
-"RED",
-"YELLOW",
-"GREEN",
-"AZURE",
-"SILVER",
-"ROSE",
-"BLACK",
-"SKY",
-"TITAN",
-"X",
-"FIRE",
-"LIME"
-],
-organizations:[
-"УГИБДД",
-"УМВД",
-"УФСБ",
-"ЕСС",
-"ВЧ",
-"СМИ"
-],
-crime:[
-"Скинхеды",
-"Байкеры",
-"Русская мафия"
+"RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY",
+"TITAN","X","FIRE","LIME"
 ]
 }
 
@@ -293,39 +199,7 @@ document.getElementById("server-info").innerHTML=`
 <div class="info-box">
 <p><span class="label">Проект:</span> ${projects[currentProject].name}</p>
 <p><span class="label">Сервер:</span> ${server}</p>
-</div>
-`;
-
-let orgList=document.getElementById("org-list");
-orgList.innerHTML="";
-projects[currentProject].organizations.forEach(org=>{
-let div=document.createElement("div");
-div.className="tab-card";
-div.innerHTML=`<h3>${org}</h3>`;
-div.onclick=()=>openOrg(org);
-orgList.appendChild(div);
-});
-
-let crimeList=document.getElementById("crime-list");
-crimeList.innerHTML="";
-projects[currentProject].crime.forEach(c=>{
-let div=document.createElement("div");
-div.className="tab-card";
-div.innerHTML=`<h3>${c}</h3>`;
-div.onclick=()=>openOrg(c);
-crimeList.appendChild(div);
-});
-}
-
-function openOrg(org){
-document.getElementById("server-screen").classList.add("hidden");
-document.getElementById("org-screen").classList.remove("hidden");
-
-document.getElementById("org-info").innerHTML=`
-<div class="info-box">
-<p><span class="label">Сервер:</span> ${currentServer}</p>
-<p><span class="label">Организация:</span> ${org}</p>
-<p><span class="label">Информация:</span> Информация будет добавлена позже.</p>
+<p><span class="label">Онлайн сервера:</span> Временно недоступен</p>
 </div>
 `;
 }
@@ -339,12 +213,6 @@ function goBackToProject(){
 document.getElementById("server-screen").classList.add("hidden");
 document.getElementById("project-screen").classList.remove("hidden");
 }
-
-function goBackToServer(){
-document.getElementById("org-screen").classList.add("hidden");
-document.getElementById("server-screen").classList.remove("hidden");
-}
-
 </script>
 
 </body>
