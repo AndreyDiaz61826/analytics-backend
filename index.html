@@ -3,196 +3,274 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Аналитический Центр 💎DARKS🍀</title>
+<title>Аналитический Центр</title>
+
 <style>
-body {margin:0; padding:0; font-family:Arial,sans-serif; background:#0f0f14; color:white;}
-header {text-align:center; padding:30px 20px; font-size:28px; font-weight:bold;}
-.container {max-width:600px; margin:20px auto;}
-.project-card, .server-card, .org-card {background:#17171f; padding:15px; border-radius:12px; margin:10px 0; cursor:pointer; transition:0.3s;}
-.project-card:hover, .server-card:hover, .org-card:hover {transform:scale(1.02);}
-.project-icon {width:60px; height:60px; border-radius:10px; object-fit:cover; margin-right:15px;}
-.flex {display:flex; align-items:center;}
-.section-title {margin:10px 0; font-size:20px; color:#3399ff;}
-.menu {display:flex; flex-wrap:wrap; gap:6px; margin:10px 0;}
-.menu-item {padding:6px 12px; border-radius:8px; cursor:pointer; background:#17171f; border:1px solid #333; transition:0.3s;}
-.menu-item.active {background:#333; border-color:#555;}
-.card-title {font-size:18px; color:#33ccff; margin-bottom:6px;}
-.card-info p {margin:4px 0; font-size:14px;}
-.card-info .label {color:#999; font-weight:bold;}
-.back-btn {margin:10px 0; padding:6px 12px; background:#222; border:none; border-radius:8px; cursor:pointer; color:white;}
-.hidden {display:none;}
-footer {text-align:center; padding:6px 0; background:#111; font-size:12px; position:fixed; bottom:0; width:100%;}
-footer a {color:#3399ff; text-decoration:none; font-weight:bold;}
-.org-btn {padding:6px 10px; margin-top:6px; background:#222; border-radius:8px; cursor:pointer; border:1px solid #333;}
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0f0f14;
+    color:white;
+}
+
+header{
+    text-align:center;
+    padding:25px;
+    font-size:26px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:700px;
+    margin:20px auto;
+    padding:0 15px;
+}
+
+.tab-card{
+    background:#17171f;
+    padding:15px;
+    border-radius:14px;
+    margin:10px 0;
+    cursor:pointer;
+    transition:0.25s;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.tab-card:hover{
+    transform:scale(1.02);
+    background:#1e1e28;
+}
+
+.project-icon{
+    width:60px;
+    height:60px;
+    border-radius:12px;
+    object-fit:cover;
+}
+
+.section-title{
+    font-size:20px;
+    margin:15px 0 10px 0;
+    color:#33ccff;
+}
+
+.info-box{
+    background:#17171f;
+    padding:15px;
+    border-radius:14px;
+    margin-bottom:15px;
+}
+
+.info-box p{
+    margin:6px 0;
+}
+
+.label{
+    color:#888;
+    font-weight:bold;
+}
+
+.back-btn{
+    background:#222;
+    border:none;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    color:white;
+    margin-bottom:10px;
+}
+
+.hidden{
+    display:none;
+}
 </style>
 </head>
+
 <body>
 
-<header>Новый Аналитический Центр 💎DARKS🍀</header>
+<header>Аналитический Центр</header>
 
-<!-- Выбор проекта -->
+<!-- ГЛАВНЫЙ ЭКРАН -->
 <div class="container" id="main-screen">
-  <div class="project-card flex" onclick="openProject('arizona')">
-    <img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="project-icon" alt="Arizona Online">
-    <h3>Arizona Online</h3>
-  </div>
-  <div class="project-card flex" onclick="openProject('rodina')">
-    <img src="IMG_20260301_192101_953.jpg" class="project-icon" alt="Rodina Online">
-    <h3>Rodina Online</h3>
-  </div>
-  <div class="project-card flex" onclick="openProject('amazing')">
-    <img src="IMG-20260301-WA0001.jpg" class="project-icon" alt="Amazing Online">
-    <h3>Amazing Online</h3>
-  </div>
+
+<div class="tab-card" onclick="openProject('arizona')">
+<img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="project-icon">
+<h3>Arizona Online</h3>
 </div>
 
-<!-- Экран сервера -->
+<div class="tab-card" onclick="openProject('rodina')">
+<img src="IMG_20260301_192101_953.jpg" class="project-icon">
+<h3>Rodina Online</h3>
+</div>
+
+<div class="tab-card" onclick="openProject('amazing')">
+<img src="IMG-20260301-WA0001.jpg" class="project-icon">
+<h3>Amazing Online</h3>
+</div>
+
+</div>
+
+<!-- ЭКРАН ПРОЕКТА -->
+<div class="container hidden" id="project-screen">
+<button class="back-btn" onclick="goHome()">← Назад</button>
+
+<div id="project-info"></div>
+
+<div class="section-title">Сервера</div>
+<div id="server-list"></div>
+</div>
+
+<!-- ЭКРАН СЕРВЕРА -->
 <div class="container hidden" id="server-screen">
-  <button class="back-btn" onclick="goBackToProjects()">← Назад к проектам</button>
-  <div class="section-title" id="server-project-name"></div>
-  <div class="menu" id="server-menu"></div>
-  
-  <!-- Карточка сервера с кнопкой "Организации: Выбрать" -->
-  <div id="server-info" class="server-card"></div>
-  
-  <div class="menu hidden" id="org-menu"></div>
+<button class="back-btn" onclick="goBackToProject()">← Назад</button>
+
+<div id="server-info"></div>
+
+<div class="section-title">
+Выберите организацию о которой хотите узнать информацию
 </div>
 
-<!-- Экран организации -->
+<div id="org-list"></div>
+</div>
+
+<!-- ЭКРАН ОРГАНИЗАЦИИ -->
 <div class="container hidden" id="org-screen">
-  <button class="back-btn" onclick="goBackToServer()">← Назад к серверу</button>
-  <div id="org-info"></div>
+<button class="back-btn" onclick="goBackToServer()">← Назад</button>
+<div id="org-info"></div>
 </div>
-
-<footer>
-  <a href="https://discord.gg/yhzmfQVNx" target="_blank">✨Dark Straiwels✨</a>
-</footer>
 
 <script>
-// Списки серверов
+
+// Данные проектов
 const projects = {
-  arizona:["Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock",
-  "Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert",
-  "Show-Low","Casa-Grande","Page","Sun-City","Queen-Creek","Sedona","Holiday","Wednesday",
-  "Yava","Faraway","Bumble Bee","Christmas","Mirage","Love","Drake","Mobile 1","Mobile 2","Mobile 3"],
-  
-  rodina:["Центральный округ","Южный округ","Северный округ","Восточный округ","Западный округ",
-  "Приморский округ","Федеральный округ","Москва","Санкт-Петербург"],
-  
-  amazing:["RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"]
+arizona:{
+    name:"Arizona Online",
+    online:"15000+",
+    devs:"Основная команда Arizona RP",
+    sponsors:"Официальные партнёры проекта",
+    servers:["Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock","Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert","Show-Low","Casa-Grande","Page","Sun-City","Queen-Creek","Sedona","Holiday","Wednesday","Yava","Faraway","Bumble Bee","Christmas","Mirage","Love","Drake","Mobile 1","Mobile 2","Mobile 3"]
+},
+rodina:{
+    name:"Rodina Online",
+    online:"9000+",
+    devs:"Команда Rodina RP",
+    sponsors:"Партнёры Rodina",
+    servers:["Центральный","Южный","Северный","Восточный","Западный","Москва","Санкт-Петербург"]
+},
+amazing:{
+    name:"Amazing Online",
+    online:"7000+",
+    devs:"Amazing RP Team",
+    sponsors:"Amazing Media",
+    servers:["RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"]
+}
 };
 
-// Информация о серверах (шаблон)
-const serverDetails = {
-  "Phoenix": {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"},
-  "Tucson": {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"},
-  "Scottdale": {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"},
-  // остальные можно добавить
-};
-
-// Полный список организаций
-const orgList = [
-  {name:"Правительство", private:false, leader:"Губернатор", deputies:"Замы", members:"-", purch:"Есть"},
-  {name:"ФБР", private:false, leader:"Директор", deputies:"Замы", members:"-", purch:"Нет"},
-  {name:"ЛСПД", private:false, leader:"Начальник", deputies:"Замы", members:"-", purch:"Нет"},
-  {name:"ЛВПД", private:false, leader:"Начальник", deputies:"Замы", members:"-", purch:"Нет"},
-  {name:"РКШД", private:false, leader:"Начальник", deputies:"Замы", members:"-", purch:"Нет"},
-  {name:"Больница Джефферсон", private:false, leader:"Главврач", deputies:"Замы", members:"-", purch:"Нет"},
-  {name:"Больница ЛС", private:false, leader:"Главврач", deputies:"Замы", members:"-", purch:"Нет"},
-  {name:"Больница ЛВ", private:false, leader:"Главврач", deputies:"Замы", members:"-", purch:"Нет"},
-  {name:"Больница СФ", private:false, leader:"Главврач", deputies:"Замы", members:"-", purch:"Нет"}
+const orgs = [
+"Правительство",
+"ФБР",
+"ЛСПД",
+"ЛВПД",
+"Армия",
+"Больница",
+"РКШД",
+"Новости"
 ];
 
-// Открытие проекта
-function openProject(projectId){
-  document.getElementById("main-screen").classList.add("hidden");
-  document.getElementById("server-screen").classList.remove("hidden");
-  const projectName = projectId.charAt(0).toUpperCase() + projectId.slice(1) + " Online";
-  document.getElementById("server-project-name").textContent = projectName;
+let currentProject = null;
+let currentServer = null;
 
-  const menu = document.getElementById("server-menu");
-  menu.innerHTML = "";
-  projects[projectId].forEach(server=>{
-    const btn = document.createElement("div");
-    btn.textContent = server;
-    btn.className = "menu-item";
-    btn.onclick = () => loadServer(projectName, server);
-    menu.appendChild(btn);
-  });
-  document.getElementById("org-menu").classList.add("hidden");
+// Открыть проект
+function openProject(id){
+currentProject = id;
+
+document.getElementById("main-screen").classList.add("hidden");
+document.getElementById("project-screen").classList.remove("hidden");
+
+const p = projects[id];
+
+document.getElementById("project-info").innerHTML = `
+<div class="info-box">
+<p><span class="label">Название проекта:</span> ${p.name}</p>
+<p><span class="label">Общий онлайн:</span> ${p.online}</p>
+<p><span class="label">Команда разработчиков:</span> ${p.devs}</p>
+<p><span class="label">Команда спонсоров:</span> ${p.sponsors}</p>
+</div>
+`;
+
+const list = document.getElementById("server-list");
+list.innerHTML = "";
+
+p.servers.forEach(server=>{
+    const div = document.createElement("div");
+    div.className="tab-card";
+    div.innerHTML=`<h3>${server}</h3>`;
+    div.onclick=()=>openServer(server);
+    list.appendChild(div);
+});
 }
 
-// Возврат к проектам
-function goBackToProjects(){
-  document.getElementById("server-screen").classList.add("hidden");
-  document.getElementById("main-screen").classList.remove("hidden");
+// Открыть сервер
+function openServer(server){
+currentServer = server;
+
+document.getElementById("project-screen").classList.add("hidden");
+document.getElementById("server-screen").classList.remove("hidden");
+
+document.getElementById("server-info").innerHTML=`
+<div class="info-box">
+<p><span class="label">Название проекта:</span> ${projects[currentProject].name}</p>
+<p><span class="label">Название сервера:</span> ${server}</p>
+<p><span class="label">Онлайн сервера:</span> -</p>
+<p><span class="label">Глав. Администратор:</span> -</p>
+</div>
+`;
+
+const orgList = document.getElementById("org-list");
+orgList.innerHTML="";
+
+orgs.forEach(org=>{
+    const div=document.createElement("div");
+    div.className="tab-card";
+    div.innerHTML=`<h3>${org}</h3>`;
+    div.onclick=()=>openOrg(org);
+    orgList.appendChild(div);
+});
 }
 
-// Загрузка информации о сервере
-function loadServer(projectName, server){
-  const info = serverDetails[server] || {admin:"-", deputy:"-", online:"-", desc:"Описание сервера"};
-  const serverInfoDiv = document.getElementById("server-info");
-  serverInfoDiv.innerHTML = `
-    <p><span class="label">Название проекта:</span> ${projectName}</p>
-    <p><span class="label">Название сервера:</span> ${server}</p>
-    <p><span class="label">Главный Администратор:</span> ${info.admin}</p>
-    <p><span class="label">Заместитель Главного Администратора:</span> ${info.deputy}</p>
-    <p><span class="label">Общий онлайн:</span> ${info.online}</p>
-    <p><span class="label">Описание сервера:</span> ${info.desc}</p>
-    <p><span class="label">Организации:</span></p>
-  `;
+// Открыть организацию
+function openOrg(org){
 
-  // Создаём кнопку программно
-  const btn = document.createElement("button");
-  btn.textContent = "Выбрать";
-  btn.className = "org-btn";
-  btn.addEventListener("click", toggleOrgMenu);
-  serverInfoDiv.appendChild(btn);
+document.getElementById("server-screen").classList.add("hidden");
+document.getElementById("org-screen").classList.remove("hidden");
 
-  document.getElementById("org-menu").classList.add("hidden");
+document.getElementById("org-info").innerHTML=`
+<div class="info-box">
+<p><span class="label">Название сервера:</span> ${currentServer}</p>
+<p><span class="label">Название организации:</span> ${org}</p>
+<p><span class="label">Информация о организации:</span> Информация будет добавлена позже.</p>
+</div>
+`;
 }
 
-// Показать/скрыть меню организаций
-function toggleOrgMenu(){
-  const orgMenu = document.getElementById("org-menu");
-  if(orgMenu.classList.contains("hidden")){
-    orgMenu.innerHTML = "";
-    orgList.forEach(org=>{
-      const btn = document.createElement("div");
-      btn.textContent = org.name;
-      btn.className = "menu-item";
-      btn.onclick = () => openOrgScreen(org);
-      orgMenu.appendChild(btn);
-    });
-    orgMenu.classList.remove("hidden");
-  } else {
-    orgMenu.classList.add("hidden");
-  }
+// Навигация
+function goHome(){
+document.getElementById("project-screen").classList.add("hidden");
+document.getElementById("main-screen").classList.remove("hidden");
 }
 
-// Открыть экран организации
-function openOrgScreen(org){
-  document.getElementById("server-screen").classList.add("hidden");
-  document.getElementById("org-screen").classList.remove("hidden");
-  document.getElementById("org-info").innerHTML = `
-    <div class="org-card">
-      <div class="card-title">${org.name}</div>
-      <div class="card-info">
-        <p><span class="label">Частная или нет:</span> ${org.private ? "Да" : "Нет"}</p>
-        <p><span class="label">Лидер:</span> ${org.leader}</p>
-        <p><span class="label">Заместители:</span> ${org.deputies}</p>
-        <p><span class="label">Кол-во участников:</span> ${org.members}</p>
-        <p><span class="label">Покупные ранги:</span> ${org.purch}</p>
-      </div>
-    </div>
-  `;
+function goBackToProject(){
+document.getElementById("server-screen").classList.add("hidden");
+document.getElementById("project-screen").classList.remove("hidden");
 }
 
-// Возврат к серверу из организации
 function goBackToServer(){
-  document.getElementById("org-screen").classList.add("hidden");
-  document.getElementById("server-screen").classList.remove("hidden");
+document.getElementById("org-screen").classList.add("hidden");
+document.getElementById("server-screen").classList.remove("hidden");
 }
+
 </script>
 
 </body>
