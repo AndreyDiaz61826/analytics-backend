@@ -23,7 +23,7 @@ header{
 }
 
 .container{
-    max-width:750px;
+    max-width:780px;
     margin:20px auto;
     padding:0 15px;
 }
@@ -50,15 +50,8 @@ header{
     gap:15px;
 }
 
-.project-icon{
-    width:60px;
-    height:60px;
-    border-radius:12px;
-    object-fit:cover;
-}
-
 .section-title{
-    font-size:18px;
+    font-size:20px;
     margin:20px 0 10px 0;
     color:#4db8ff;
 }
@@ -98,17 +91,14 @@ header{
 <div class="container" id="main-screen">
 
 <div class="tab-card project-card" onclick="openProject('arizona')">
-<img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="project-icon">
 <h3>Arizona Online</h3>
 </div>
 
 <div class="tab-card project-card" onclick="openProject('rodina')">
-<img src="IMG_20260301_192101_953.jpg" class="project-icon">
 <h3>Rodina Online</h3>
 </div>
 
 <div class="tab-card project-card" onclick="openProject('amazing')">
-<img src="IMG-20260301-WA0001.jpg" class="project-icon">
 <h3>Amazing Online</h3>
 </div>
 
@@ -130,7 +120,6 @@ header{
 
 <div class="section-title">Преступные организации</div>
 <div id="crime-list"></div>
-
 </div>
 
 <div class="container hidden" id="org-screen">
@@ -142,18 +131,73 @@ header{
 
 const projects = {
 
+// Arizona Online (реальный список серверов)
 arizona:{
 name:"Arizona Online",
 online:"15000+",
-servers:["Phoenix","Tucson","Scottdale","Chandler"],
-organizations:["Правительство","ФБР","ЛСПД","ЛВПД","СФПД","РКШД","БОЛЬНИЦА ДЖЕФЕРСОН","БОЛЬНИЦА СФ","БОЛЬНИЦА ЛС","БОЛЬНИЦА ЛВ","СМИ ЛС","СМИ ЛВ","СМИ СФ"],
-crime:["Russian Mafia","Yakuza","La Cosa Nostra","Warlock MC","Tierra Robada Bikers"]
+servers:[
+"Phoenix",
+"Tucson",
+"Scottdale",
+"Chandler",
+"Brainburg",
+"Saint-Rose",
+"Mesa",
+"Red-Rock",
+"Yuma",
+"Surprise",
+"Prescott",
+"Glendale",
+"Kingman",
+"Winslow",
+"Payson",
+"Gilbert",
+"Show-Low",
+"Casa-Grande",
+"Page",
+"Sun-City",
+"Queen-Creek",
+"Sedona",
+"Holiday"
+],
+organizations:[
+"Правительство",
+"ФБР",
+"ЛСПД",
+"ЛВПД",
+"СФПД",
+"РКШД",
+"БОЛЬНИЦА ДЖЕФФЕРСОН",
+"БОЛЬНИЦА СФ",
+"БОЛЬНИЦА ЛС",
+"БОЛЬНИЦА ЛВ",
+"СМИ ЛС",
+"СМИ ЛВ",
+"СМИ СФ"
+],
+crime:[
+"Russian Mafia",
+"Yakuza",
+"La Cosa Nostra",
+"Warlock MC",
+"Tierra Robada Bikers"
+]
 },
 
 rodina:{
 name:"Rodina Online",
 online:"9000+",
-servers:["Арзамас","Эдово"],
+servers:[
+"Арзамас",
+"Эдово",
+"Южный округ",
+"Северный округ",
+"Западный округ",
+"Центральный округ",
+"Восточный округ",
+"Москва",
+"Санкт-Петербург"
+],
 organizations:[
 "Правительство (Мэрия округа)",
 "ФСБ",
@@ -182,9 +226,33 @@ crime:[
 amazing:{
 name:"Amazing Online",
 online:"7000+",
-servers:["RED","YELLOW","GREEN"],
-organizations:["УГИБДД","УМВД","УФСБ","ЕСС","ВЧ","СМИ"],
-crime:["Скинхеды","Байкеры","Русская мафия"]
+servers:[
+"RED",
+"YELLOW",
+"GREEN",
+"AZURE",
+"SILVER",
+"ROSE",
+"BLACK",
+"SKY",
+"TITAN",
+"X",
+"FIRE",
+"LIME"
+],
+organizations:[
+"УГИБДД",
+"УМВД",
+"УФСБ",
+"ЕСС",
+"ВЧ",
+"СМИ"
+],
+crime:[
+"Скинхеды",
+"Байкеры",
+"Русская мафия"
+]
 }
 
 };
@@ -198,7 +266,6 @@ document.getElementById("main-screen").classList.add("hidden");
 document.getElementById("project-screen").classList.remove("hidden");
 
 const p=projects[id];
-
 document.getElementById("project-info").innerHTML=`
 <div class="info-box">
 <p><span class="label">Название проекта:</span> ${p.name}</p>
@@ -219,14 +286,13 @@ list.appendChild(div);
 
 function openServer(server){
 currentServer=server;
-
 document.getElementById("project-screen").classList.add("hidden");
 document.getElementById("server-screen").classList.remove("hidden");
 
 document.getElementById("server-info").innerHTML=`
 <div class="info-box">
-<p><span class="label">Название проекта:</span> ${projects[currentProject].name}</p>
-<p><span class="label">Название сервера:</span> ${server}</p>
+<p><span class="label">Проект:</span> ${projects[currentProject].name}</p>
+<p><span class="label">Сервер:</span> ${server}</p>
 </div>
 `;
 
@@ -242,11 +308,11 @@ orgList.appendChild(div);
 
 let crimeList=document.getElementById("crime-list");
 crimeList.innerHTML="";
-projects[currentProject].crime.forEach(org=>{
+projects[currentProject].crime.forEach(c=>{
 let div=document.createElement("div");
 div.className="tab-card";
-div.innerHTML=`<h3>${org}</h3>`;
-div.onclick=()=>openOrg(org);
+div.innerHTML=`<h3>${c}</h3>`;
+div.onclick=()=>openOrg(c);
 crimeList.appendChild(div);
 });
 }
@@ -257,8 +323,8 @@ document.getElementById("org-screen").classList.remove("hidden");
 
 document.getElementById("org-info").innerHTML=`
 <div class="info-box">
-<p><span class="label">Название сервера:</span> ${currentServer}</p>
-<p><span class="label">Название организации:</span> ${org}</p>
+<p><span class="label">Сервер:</span> ${currentServer}</p>
+<p><span class="label">Организация:</span> ${org}</p>
 <p><span class="label">Информация:</span> Информация будет добавлена позже.</p>
 </div>
 `;
