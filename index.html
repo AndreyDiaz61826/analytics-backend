@@ -13,20 +13,6 @@ body{
     font-family:'Inter', sans-serif;
     background: radial-gradient(circle at top, #1a1a2e 0%, #0f0f1a 40%, #070710 100%);
     color:#fff;
-    overflow-x:hidden;
-}
-
-/* мягкое фоновое свечение */
-body::before{
-    content:"";
-    position:fixed;
-    top:-200px;
-    left:-200px;
-    width:600px;
-    height:600px;
-    background:radial-gradient(circle,#2a6cff55,transparent 70%);
-    filter:blur(120px);
-    z-index:-1;
 }
 
 header{
@@ -34,7 +20,6 @@ header{
     padding:30px;
     font-size:28px;
     font-weight:700;
-    letter-spacing:1px;
 }
 
 .container{
@@ -43,7 +28,6 @@ header{
     padding:0 20px;
 }
 
-/* стеклянная карточка */
 .tab-card{
     background:rgba(255,255,255,0.05);
     backdrop-filter:blur(12px);
@@ -54,24 +38,6 @@ header{
     transition:all 0.3s ease;
     border:1px solid rgba(255,255,255,0.08);
     box-shadow:0 10px 25px rgba(0,0,0,0.4);
-    position:relative;
-    overflow:hidden;
-}
-
-/* подсветка при наведении */
-.tab-card::after{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent);
-    transition:0.6s;
-}
-
-.tab-card:hover::after{
-    left:100%;
 }
 
 .tab-card:hover{
@@ -91,26 +57,20 @@ header{
     height:65px;
     border-radius:16px;
     object-fit:cover;
-    box-shadow:0 8px 20px rgba(0,0,0,0.6);
 }
 
 .section-title{
     font-size:20px;
     margin:30px 0 15px 0;
     font-weight:600;
-    background:linear-gradient(90deg,#4da6ff,#8f6cff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+    color:#7faaff;
 }
 
 .info-box{
     background:rgba(255,255,255,0.04);
-    backdrop-filter:blur(10px);
     padding:22px;
     border-radius:18px;
     margin-bottom:20px;
-    border:1px solid rgba(255,255,255,0.08);
-    box-shadow:0 8px 25px rgba(0,0,0,0.4);
 }
 
 .label{
@@ -119,7 +79,7 @@ header{
 }
 
 .back-btn{
-    background:linear-gradient(90deg,#2a6cff,#5f8cff);
+    background:#2a6cff;
     border:none;
     padding:8px 18px;
     border-radius:12px;
@@ -127,12 +87,6 @@ header{
     color:white;
     font-weight:600;
     margin-bottom:20px;
-    transition:0.3s;
-}
-
-.back-btn:hover{
-    transform:scale(1.05);
-    box-shadow:0 5px 15px rgba(42,108,255,0.5);
 }
 
 .hidden{
@@ -145,20 +99,19 @@ header{
 <header>Аналитический Центр</header>
 
 <div class="container" id="main-screen">
+
 <div class="tab-card project-card" onclick="openProject('arizona')">
-<img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="project-icon">
 <h3>Arizona Online</h3>
 </div>
 
 <div class="tab-card project-card" onclick="openProject('rodina')">
-<img src="IMG_20260301_192101_953.jpg" class="project-icon">
 <h3>Rodina Online</h3>
 </div>
 
 <div class="tab-card project-card" onclick="openProject('amazing')">
-<img src="IMG-20260301-WA0001.jpg" class="project-icon">
 <h3>Amazing Online</h3>
 </div>
+
 </div>
 
 <div class="container hidden" id="project-screen">
@@ -183,7 +136,126 @@ header{
 </div>
 
 <script>
-/* JS оставляем тот же самый что у тебя был */
+
+const projects = {
+
+arizona:{
+name:"Arizona Online",
+online:"15000+",
+servers:["Phoenix","Tucson"],
+organizations:["Правительство","ФБР"],
+crime:["Russian Mafia"]
+},
+
+rodina:{
+name:"Rodina Online",
+online:"9000+",
+servers:["Арзамас","Эдово"],
+organizations:["ФСБ","МВД","Армия"],
+crime:["Русская мафия"]
+},
+
+amazing:{
+name:"Amazing Online",
+online:"7000+",
+servers:["RED","YELLOW","GREEN"],
+organizations:["УГИБДД","УМВД","УФСБ","ЕСС","ВЧ","СМИ"],
+crime:["Скинхеды","Байкеры","Русская мафия"]
+}
+
+};
+
+let currentProject=null;
+let currentServer=null;
+
+function openProject(id){
+currentProject=id;
+
+document.getElementById("main-screen").classList.add("hidden");
+document.getElementById("project-screen").classList.remove("hidden");
+
+const p=projects[id];
+
+document.getElementById("project-info").innerHTML=`
+<div class="info-box">
+<p><span class="label">Название проекта:</span> ${p.name}</p>
+<p><span class="label">Онлайн:</span> ${p.online}</p>
+</div>
+`;
+
+let list=document.getElementById("server-list");
+list.innerHTML="";
+p.servers.forEach(server=>{
+let div=document.createElement("div");
+div.className="tab-card";
+div.innerHTML=`<h3>${server}</h3>`;
+div.onclick=()=>openServer(server);
+list.appendChild(div);
+});
+}
+
+function openServer(server){
+currentServer=server;
+
+document.getElementById("project-screen").classList.add("hidden");
+document.getElementById("server-screen").classList.remove("hidden");
+
+document.getElementById("server-info").innerHTML=`
+<div class="info-box">
+<p><span class="label">Проект:</span> ${projects[currentProject].name}</p>
+<p><span class="label">Сервер:</span> ${server}</p>
+</div>
+`;
+
+let orgList=document.getElementById("org-list");
+orgList.innerHTML="";
+projects[currentProject].organizations.forEach(org=>{
+let div=document.createElement("div");
+div.className="tab-card";
+div.innerHTML=`<h3>${org}</h3>`;
+div.onclick=()=>openOrg(org);
+orgList.appendChild(div);
+});
+
+let crimeList=document.getElementById("crime-list");
+crimeList.innerHTML="";
+projects[currentProject].crime.forEach(org=>{
+let div=document.createElement("div");
+div.className="tab-card";
+div.innerHTML=`<h3>${org}</h3>`;
+div.onclick=()=>openOrg(org);
+crimeList.appendChild(div);
+});
+}
+
+function openOrg(org){
+document.getElementById("server-screen").classList.add("hidden");
+document.getElementById("org-screen").classList.remove("hidden");
+
+document.getElementById("org-info").innerHTML=`
+<div class="info-box">
+<p><span class="label">Сервер:</span> ${currentServer}</p>
+<p><span class="label">Организация:</span> ${org}</p>
+<p><span class="label">Информация:</span> Будет добавлена позже</p>
+</div>
+`;
+}
+
+function goHome(){
+document.getElementById("project-screen").classList.add("hidden");
+document.getElementById("main-screen").classList.remove("hidden");
+}
+
+function goBackToProject(){
+document.getElementById("server-screen").classList.add("hidden");
+document.getElementById("project-screen").classList.remove("hidden");
+}
+
+function goBackToServer(){
+document.getElementById("org-screen").classList.add("hidden");
+document.getElementById("server-screen").classList.remove("hidden");
+}
+
 </script>
 
 </body>
