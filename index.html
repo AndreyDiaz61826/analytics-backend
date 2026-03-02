@@ -9,8 +9,8 @@
 body{
     margin:0;
     font-family:Arial, sans-serif;
-    background:#0f0f14;
-    color:white;
+    background:#0e0e13;
+    color:#fff;
 }
 
 header{
@@ -18,29 +18,36 @@ header{
     padding:25px;
     font-size:26px;
     font-weight:bold;
+    background:#111118;
+    box-shadow:0 2px 10px rgba(0,0,0,0.6);
 }
 
 .container{
-    max-width:700px;
+    max-width:750px;
     margin:20px auto;
     padding:0 15px;
 }
 
 .tab-card{
-    background:#17171f;
-    padding:15px;
+    background:#181823;
+    padding:18px;
     border-radius:14px;
-    margin:10px 0;
+    margin:12px 0;
     cursor:pointer;
     transition:0.25s;
-    display:flex;
-    align-items:center;
-    gap:15px;
+    border:1px solid #222;
 }
 
 .tab-card:hover{
-    transform:scale(1.02);
-    background:#1e1e28;
+    background:#20202d;
+    transform:translateY(-3px);
+    box-shadow:0 6px 18px rgba(0,0,0,0.5);
+}
+
+.project-card{
+    display:flex;
+    align-items:center;
+    gap:15px;
 }
 
 .project-icon{
@@ -51,35 +58,40 @@ header{
 }
 
 .section-title{
-    font-size:20px;
-    margin:15px 0 10px 0;
-    color:#33ccff;
+    font-size:18px;
+    margin:20px 0 10px 0;
+    color:#4db8ff;
 }
 
 .info-box{
-    background:#17171f;
-    padding:15px;
+    background:#181823;
+    padding:18px;
     border-radius:14px;
-    margin-bottom:15px;
+    margin-bottom:20px;
+    border:1px solid #222;
 }
 
 .info-box p{
-    margin:6px 0;
+    margin:8px 0;
 }
 
 .label{
-    color:#888;
+    color:#8a8a8a;
     font-weight:bold;
 }
 
 .back-btn{
-    background:#222;
-    border:none;
-    padding:6px 12px;
+    background:#1f1f2b;
+    border:1px solid #333;
+    padding:6px 14px;
     border-radius:8px;
     cursor:pointer;
     color:white;
-    margin-bottom:10px;
+    margin-bottom:15px;
+}
+
+.back-btn:hover{
+    background:#29293a;
 }
 
 .hidden{
@@ -95,17 +107,17 @@ header{
 <!-- ГЛАВНЫЙ ЭКРАН -->
 <div class="container" id="main-screen">
 
-<div class="tab-card" onclick="openProject('arizona')">
+<div class="tab-card project-card" onclick="openProject('arizona')">
 <img src="ffcdca2633fa997c18c3d443d6b181fcecc5fb3d.png" class="project-icon">
 <h3>Arizona Online</h3>
 </div>
 
-<div class="tab-card" onclick="openProject('rodina')">
+<div class="tab-card project-card" onclick="openProject('rodina')">
 <img src="IMG_20260301_192101_953.jpg" class="project-icon">
 <h3>Rodina Online</h3>
 </div>
 
-<div class="tab-card" onclick="openProject('amazing')">
+<div class="tab-card project-card" onclick="openProject('amazing')">
 <img src="IMG-20260301-WA0001.jpg" class="project-icon">
 <h3>Amazing Online</h3>
 </div>
@@ -115,9 +127,7 @@ header{
 <!-- ЭКРАН ПРОЕКТА -->
 <div class="container hidden" id="project-screen">
 <button class="back-btn" onclick="goHome()">← Назад</button>
-
 <div id="project-info"></div>
-
 <div class="section-title">Сервера</div>
 <div id="server-list"></div>
 </div>
@@ -125,14 +135,14 @@ header{
 <!-- ЭКРАН СЕРВЕРА -->
 <div class="container hidden" id="server-screen">
 <button class="back-btn" onclick="goBackToProject()">← Назад</button>
-
 <div id="server-info"></div>
 
-<div class="section-title">
-Выберите организацию о которой хотите узнать информацию
-</div>
-
+<div class="section-title">Государственные организации</div>
 <div id="org-list"></div>
+
+<div class="section-title">Преступные синдикаты</div>
+<div id="crime-list"></div>
+
 </div>
 
 <!-- ЭКРАН ОРГАНИЗАЦИИ -->
@@ -143,55 +153,65 @@ header{
 
 <script>
 
-// Данные проектов
 const projects = {
 arizona:{
-    name:"Arizona Online",
-    online:"15000+",
-    devs:"Основная команда Arizona RP",
-    sponsors:"Официальные партнёры проекта",
-    servers:["Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock","Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert","Show-Low","Casa-Grande","Page","Sun-City","Queen-Creek","Sedona","Holiday","Wednesday","Yava","Faraway","Bumble Bee","Christmas","Mirage","Love","Drake","Mobile 1","Mobile 2","Mobile 3"]
+name:"Arizona Online",
+online:"15000+",
+devs:"Основная команда Arizona RP",
+sponsors:"Официальные партнёры проекта",
+servers:["Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock","Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert","Show-Low","Casa-Grande","Page","Sun-City","Queen-Creek","Sedona","Holiday","Wednesday","Yava","Faraway","Bumble Bee","Christmas","Mirage","Love","Drake","Mobile 1","Mobile 2","Mobile 3"]
 },
 rodina:{
-    name:"Rodina Online",
-    online:"9000+",
-    devs:"Команда Rodina RP",
-    sponsors:"Партнёры Rodina",
-    servers:["Центральный","Южный","Северный","Восточный","Западный","Москва","Санкт-Петербург"]
+name:"Rodina Online",
+online:"9000+",
+devs:"Команда Rodina RP",
+sponsors:"Партнёры Rodina",
+servers:["Центральный","Южный","Северный","Восточный","Западный","Москва","Санкт-Петербург"]
 },
 amazing:{
-    name:"Amazing Online",
-    online:"7000+",
-    devs:"Amazing RP Team",
-    sponsors:"Amazing Media",
-    servers:["RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"]
+name:"Amazing Online",
+online:"7000+",
+devs:"Amazing RP Team",
+sponsors:"Amazing Media",
+servers:["RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"]
 }
 };
 
-const orgs = [
+const organizations = [
 "Правительство",
 "ФБР",
 "ЛСПД",
 "ЛВПД",
-"Армия",
-"Больница",
+"СФПД",
 "РКШД",
-"Новости"
+"БОЛЬНИЦА ДЖЕФЕРСОН",
+"БОЛЬНИЦА СФ",
+"БОЛЬНИЦА ЛС",
+"БОЛЬНИЦА ЛВ",
+"СМИ ЛС",
+"СМИ ЛВ",
+"СМИ СФ"
 ];
 
-let currentProject = null;
-let currentServer = null;
+const crimeOrgs = [
+"Russian Mafia",
+"Yakuza",
+"La Cosa Nostra",
+"Warlock MC",
+"Tierra Robada Bikers"
+];
 
-// Открыть проект
+let currentProject=null;
+let currentServer=null;
+
 function openProject(id){
-currentProject = id;
-
+currentProject=id;
 document.getElementById("main-screen").classList.add("hidden");
 document.getElementById("project-screen").classList.remove("hidden");
 
-const p = projects[id];
+const p=projects[id];
 
-document.getElementById("project-info").innerHTML = `
+document.getElementById("project-info").innerHTML=`
 <div class="info-box">
 <p><span class="label">Название проекта:</span> ${p.name}</p>
 <p><span class="label">Общий онлайн:</span> ${p.online}</p>
@@ -200,22 +220,19 @@ document.getElementById("project-info").innerHTML = `
 </div>
 `;
 
-const list = document.getElementById("server-list");
-list.innerHTML = "";
-
+const list=document.getElementById("server-list");
+list.innerHTML="";
 p.servers.forEach(server=>{
-    const div = document.createElement("div");
-    div.className="tab-card";
-    div.innerHTML=`<h3>${server}</h3>`;
-    div.onclick=()=>openServer(server);
-    list.appendChild(div);
+let div=document.createElement("div");
+div.className="tab-card";
+div.innerHTML=`<h3>${server}</h3>`;
+div.onclick=()=>openServer(server);
+list.appendChild(div);
 });
 }
 
-// Открыть сервер
 function openServer(server){
-currentServer = server;
-
+currentServer=server;
 document.getElementById("project-screen").classList.add("hidden");
 document.getElementById("server-screen").classList.remove("hidden");
 
@@ -228,21 +245,28 @@ document.getElementById("server-info").innerHTML=`
 </div>
 `;
 
-const orgList = document.getElementById("org-list");
+let orgList=document.getElementById("org-list");
 orgList.innerHTML="";
+organizations.forEach(org=>{
+let div=document.createElement("div");
+div.className="tab-card";
+div.innerHTML=`<h3>${org}</h3>`;
+div.onclick=()=>openOrg(org);
+orgList.appendChild(div);
+});
 
-orgs.forEach(org=>{
-    const div=document.createElement("div");
-    div.className="tab-card";
-    div.innerHTML=`<h3>${org}</h3>`;
-    div.onclick=()=>openOrg(org);
-    orgList.appendChild(div);
+let crimeList=document.getElementById("crime-list");
+crimeList.innerHTML="";
+crimeOrgs.forEach(org=>{
+let div=document.createElement("div");
+div.className="tab-card";
+div.innerHTML=`<h3>${org}</h3>`;
+div.onclick=()=>openOrg(org);
+crimeList.appendChild(div);
 });
 }
 
-// Открыть организацию
 function openOrg(org){
-
 document.getElementById("server-screen").classList.add("hidden");
 document.getElementById("org-screen").classList.remove("hidden");
 
@@ -255,7 +279,6 @@ document.getElementById("org-info").innerHTML=`
 `;
 }
 
-// Навигация
 function goHome(){
 document.getElementById("project-screen").classList.add("hidden");
 document.getElementById("main-screen").classList.remove("hidden");
