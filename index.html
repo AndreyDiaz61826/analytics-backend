@@ -71,10 +71,6 @@ header{
     border:1px solid #222;
 }
 
-.info-box p{
-    margin:8px 0;
-}
-
 .label{
     color:#8a8a8a;
     font-weight:bold;
@@ -90,21 +86,15 @@ header{
     margin-bottom:15px;
 }
 
-.back-btn:hover{
-    background:#29293a;
-}
-
 .hidden{
     display:none;
 }
 </style>
 </head>
-
 <body>
 
 <header>Аналитический Центр</header>
 
-<!-- ГЛАВНЫЙ ЭКРАН -->
 <div class="container" id="main-screen">
 
 <div class="tab-card project-card" onclick="openProject('arizona')">
@@ -124,7 +114,6 @@ header{
 
 </div>
 
-<!-- ЭКРАН ПРОЕКТА -->
 <div class="container hidden" id="project-screen">
 <button class="back-btn" onclick="goHome()">← Назад</button>
 <div id="project-info"></div>
@@ -132,7 +121,6 @@ header{
 <div id="server-list"></div>
 </div>
 
-<!-- ЭКРАН СЕРВЕРА -->
 <div class="container hidden" id="server-screen">
 <button class="back-btn" onclick="goBackToProject()">← Назад</button>
 <div id="server-info"></div>
@@ -140,12 +128,11 @@ header{
 <div class="section-title">Государственные организации</div>
 <div id="org-list"></div>
 
-<div class="section-title">Преступные синдикаты</div>
+<div class="section-title">Преступные организации</div>
 <div id="crime-list"></div>
 
 </div>
 
-<!-- ЭКРАН ОРГАНИЗАЦИИ -->
 <div class="container hidden" id="org-screen">
 <button class="back-btn" onclick="goBackToServer()">← Назад</button>
 <div id="org-info"></div>
@@ -154,52 +141,64 @@ header{
 <script>
 
 const projects = {
+
 arizona:{
 name:"Arizona Online",
 online:"15000+",
-devs:"Основная команда Arizona RP",
-sponsors:"Официальные партнёры проекта",
-servers:["Phoenix","Tucson","Scottdale","Chandler","Brainburg","Saint-Rose","Mesa","Red-Rock","Yuma","Surprise","Prescott","Glendale","Kingman","Winslow","Payson","Gilbert","Show-Low","Casa-Grande","Page","Sun-City","Queen-Creek","Sedona","Holiday","Wednesday","Yava","Faraway","Bumble Bee","Christmas","Mirage","Love","Drake","Mobile 1","Mobile 2","Mobile 3"]
+servers:["Phoenix","Tucson","Scottdale","Chandler"],
+organizations:["Правительство","ФБР","ЛСПД","Армия"],
+crime:["Russian Mafia","Yakuza"]
 },
+
 rodina:{
 name:"Rodina Online",
 online:"9000+",
-devs:"Команда Rodina RP",
-sponsors:"Партнёры Rodina",
-servers:["Центральный","Южный","Северный","Восточный","Западный","Москва","Санкт-Петербург"]
+servers:["Арзамас","Эдово"],
+organizations:[
+"Правительство (Мэрия округа)",
+"ФСБ",
+"МВД",
+"ГИБДД",
+"ГУВД (Арзамас/Эдово)",
+"Министерство обороны",
+"Армия (Сухопутные войска)",
+"Министерство здравоохранения",
+"МЦА (Больница г. Арзамаса)",
+"МЦЭ (Больница г. Эдово)",
+"СМИ (Радиоцентры)",
+"ФСИН",
+"Центр лицензирования (Автошкола)"
+],
+crime:[
+"Русская мафия",
+"Украинская мафия",
+"Кавказская мафия",
+"Черная кошка",
+"Санитары",
+"Фантомасы"
+]
 },
+
 amazing:{
 name:"Amazing Online",
 online:"7000+",
-devs:"Amazing RP Team",
-sponsors:"Amazing Media",
-servers:["RED","YELLOW","GREEN","AZURE","SILVER","ROSE","BLACK","SKY","TITAN","X","FIRE","LIME"]
+servers:["RED","YELLOW","GREEN"],
+organizations:[
+"УГИБДД",
+"УМВД",
+"УФСБ",
+"ЕСС",
+"ВЧ",
+"СМИ"
+],
+crime:[
+"Скинхеды",
+"Байкеры",
+"Русская мафия"
+]
 }
+
 };
-
-const organizations = [
-"Правительство",
-"ФБР",
-"ЛСПД",
-"ЛВПД",
-"СФПД",
-"РКШД",
-"БОЛЬНИЦА ДЖЕФЕРСОН",
-"БОЛЬНИЦА СФ",
-"БОЛЬНИЦА ЛС",
-"БОЛЬНИЦА ЛВ",
-"СМИ ЛС",
-"СМИ ЛВ",
-"СМИ СФ"
-];
-
-const crimeOrgs = [
-"Russian Mafia",
-"Yakuza",
-"La Cosa Nostra",
-"Warlock MC",
-"Tierra Robada Bikers"
-];
 
 let currentProject=null;
 let currentServer=null;
@@ -215,12 +214,10 @@ document.getElementById("project-info").innerHTML=`
 <div class="info-box">
 <p><span class="label">Название проекта:</span> ${p.name}</p>
 <p><span class="label">Общий онлайн:</span> ${p.online}</p>
-<p><span class="label">Команда разработчиков:</span> ${p.devs}</p>
-<p><span class="label">Команда спонсоров:</span> ${p.sponsors}</p>
 </div>
 `;
 
-const list=document.getElementById("server-list");
+let list=document.getElementById("server-list");
 list.innerHTML="";
 p.servers.forEach(server=>{
 let div=document.createElement("div");
@@ -240,14 +237,12 @@ document.getElementById("server-info").innerHTML=`
 <div class="info-box">
 <p><span class="label">Название проекта:</span> ${projects[currentProject].name}</p>
 <p><span class="label">Название сервера:</span> ${server}</p>
-<p><span class="label">Онлайн сервера:</span> -</p>
-<p><span class="label">Глав. Администратор:</span> -</p>
 </div>
 `;
 
 let orgList=document.getElementById("org-list");
 orgList.innerHTML="";
-organizations.forEach(org=>{
+projects[currentProject].organizations.forEach(org=>{
 let div=document.createElement("div");
 div.className="tab-card";
 div.innerHTML=`<h3>${org}</h3>`;
@@ -257,7 +252,7 @@ orgList.appendChild(div);
 
 let crimeList=document.getElementById("crime-list");
 crimeList.innerHTML="";
-crimeOrgs.forEach(org=>{
+projects[currentProject].crime.forEach(org=>{
 let div=document.createElement("div");
 div.className="tab-card";
 div.innerHTML=`<h3>${org}</h3>`;
@@ -274,7 +269,7 @@ document.getElementById("org-info").innerHTML=`
 <div class="info-box">
 <p><span class="label">Название сервера:</span> ${currentServer}</p>
 <p><span class="label">Название организации:</span> ${org}</p>
-<p><span class="label">Информация о организации:</span> Информация будет добавлена позже.</p>
+<p><span class="label">Информация:</span> Информация будет добавлена позже.</p>
 </div>
 `;
 }
@@ -295,6 +290,5 @@ document.getElementById("server-screen").classList.remove("hidden");
 }
 
 </script>
-
 </body>
 </html>
